@@ -1,0 +1,136 @@
+<div class="card-text text-center" style="margin-top: 30px" *ngIf="loading">
+  <div class="sk-spinner sk-spinner-three-bounce">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
+</div>
+<div [ngClass]="{'shadowed':showAddForm}" *ngIf="!loading">
+ <div style="width:100%;display: flex;margin: 20px">
+  <article style="margin-right: 10px" class="leaderboard">
+    <header>
+      <h1 class="leaderboard__title" style="color: #35d8ac"><span class="leaderboard__title--top">Active</span><span class="leaderboard__title--bottom">Collaborators</span></h1>
+      <br>
+      <div class="searchDiv">
+        <input id="inputActive" @inputSlider *ngIf="showSearchActive" type="text" [(ngModel)]="searchActive" class="searchInput"/>
+        <span (click)="showSearchActive = true; showSearchNonActive = false;showSearchPending = false;focus('inputActive')" *ngIf="!showSearchActive" matTooltip="Open search input" style="cursor: pointer;color: white"><i class="fa fa-search"></i></span>
+        <span (click)="showSearchActive = false;searchActive = ''" *ngIf="showSearchActive" matTooltip="Close search input" style="cursor: pointer;color: white"><i class="fa fa-circle-xmark"></i></span>
+      </div>
+    </header>
+    <main style="max-height: 400px;min-height: 400px;overflow-y: auto;overflow-x: hidden" class="leaderboard__profiles">
+      <div style="margin-bottom: 20px" *ngFor="let st of teams">
+        <div matTooltip="Team name" class="teamName" (click)="st.collapsed = !st.collapsed" style="cursor: pointer;">
+          {{st.name}}
+          <span *ngIf="st.joinTeam.length>0">
+          <span *ngIf="!st.collapsed" style="color: black;margin: 5px"><i class="fa-solid fa-square-caret-up"></i></span>
+          <span  *ngIf="st.collapsed" style="color: black;margin: 5px"><i class="fa-solid fa-square-caret-down"></i></span>
+        </span>
+        </div>
+      <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: 20px" *ngIf="st.joinTeam.length == 0">
+        No collaborators on this team
+      </div>
+          <span *ngIf="!st.collapsed">
+        <span *ngFor="let jt of st.joinTeam | filter : searchActive" >
+      <article *ngIf="jt.status == 1" class="leaderboard__profile">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+        <div class="info">
+
+          <span style="color:#f0ad4e;font-size: 20px;float: right;margin-right: -5px" [ngStyle]="{'opacity' : disableButtons ? '0.5' : '1'}" (click)="removeFromTeam(jt,st)" matTooltip="Remove from Team"><i class="fa fa-cancel"></i></span>
+        <span class="leaderboard__name">{{jt.collaborator.firstName}} {{jt.collaborator.lastName}}</span><br>
+          <span class="leaderboard__name email">{{jt.collaborator.email}}</span><br>
+          <span class="leaderboard__name dateJoined">Joined team : {{jt.dateJoined | date: 'dd MMMM yyyy'}}</span>
+          <span class="leaderboard__name scrum" matTooltip="Role">{{jt.role}}</span>
+        </div>
+      </article>
+          </span>
+            </span>
+      </div>
+
+    </main>
+  </article>
+
+  <article style="margin-right: 10px" class="leaderboard">
+    <header>
+      <h1 class="leaderboard__title" style="color:#f0ad4e"><span class="leaderboard__title--top">Pending</span><span class="leaderboard__title--bottom">Collaborators</span></h1>
+      <div style="margin-top: 25%" class="searchDiv">
+        <input id="inputPending" @inputSlider *ngIf="showSearchPending" [(ngModel)]="searchPending" type="text" class="searchInput"/>
+        <span (click)="showSearchPending = true;showSearchActive = false; showSearchNonActive = false;focus('inputPending')" *ngIf="!showSearchPending" matTooltip="Open search input" style="cursor: pointer;color: white"><i class="fa fa-search"></i></span>
+        <span (click)="showSearchPending = false;searchPending = ''" *ngIf="showSearchPending" matTooltip="Close search input" style="cursor: pointer;color: white"><i class="fa fa-circle-xmark"></i></span>
+
+      </div>
+    </header>
+    <main style="max-height: 400px;overflow-y: auto;overflow-x: hidden" class="leaderboard__profiles">
+      <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: 100px" *ngIf="pendingCollabs.length == 0">
+        No pending invitations to show
+      </div>
+      <article *ngFor="let jt of pendingCollabs  | filter : searchPending" class="leaderboard__profile">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+        <div class="info">
+          <span class="leaderboard__name">{{jt.collaborator.firstName}} {{jt.collaborator.lastName}}</span><br>
+          <span class="leaderboard__name email" style="font-size:12px ">{{jt.collaborator.email}}</span><br>
+          <span class="leaderboard__name scrum" style="font-size: 11px"><span matTooltip="Team">{{jt.collaborator.team.name}}</span> | <span matTooltip="Role">{{jt.role}}</span></span>
+        </div>
+        <span style="color:#d9534f;font-size: 20px;float: right;margin-left: 60px" [ngStyle]="{'opacity' : disableButtons ? '0.5' : '1'}" (click)="deleteInvitaion(jt)" matTooltip="Cancel invitation"><i class="fa fa-trash-alt"></i></span>
+      </article>
+    </main>
+  </article>
+
+
+  <article class="leaderboard">
+    <header>
+      <h1 class="leaderboard__title" style="color:#5bc0de"><span class="leaderboard__title--top">All</span><span class="leaderboard__title--bottom">Collaborators</span></h1>
+      <div style="margin-top: 25%" class="searchDiv">
+        <input id="inputNonActive" @inputSlider *ngIf="showSearchNonActive" [(ngModel)]="searchNonActive" type="text" class="searchInput"/>
+        <span (click)="showSearchNonActive = true; showSearchPending = false; showSearchActive = false;focus('inputNonActive')" *ngIf="!showSearchNonActive" matTooltip="Open search input" style="cursor: pointer;color: white"><i class="fa fa-search"></i></span>
+        <span (click)="showSearchNonActive = false;searchNonActive = ''" *ngIf="showSearchNonActive" matTooltip="Close search input" style="cursor: pointer;color: white"><i class="fa fa-circle-xmark"></i></span>
+
+      </div>
+    </header>
+    <main style="max-height: 400px;overflow-y: auto;overflow-x: hidden" class="leaderboard__profiles">
+      <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: 100px" *ngIf="allCollabs.length == 0">
+        No collaborators to show
+      </div>
+      <article *ngFor="let ac of allCollabs | filter : searchNonActive" class="leaderboard__profile">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+        <div class="info" >
+          <span style="color:#35d8ac;font-size: 20px;float: right;margin-right: -5px" [ngStyle]="{'opacity' : disableButtons ? '0.5' : '1'}" (click)="assginToATeam(ac)" matTooltip="Invite to a team"><i class="fa fa-plus-circle"></i></span>
+          <span class="leaderboard__name">{{ac.firstName}} {{ac.lastName}}</span><br>
+          <span class="leaderboard__name email">{{ac.email}}</span>
+        </div>
+      </article>
+    </main>
+  </article>
+
+</div>
+</div>
+
+<div (click)="stayOn = true" @animSlider *ngIf="showAddForm" class="container">
+  <div class="container-text">
+    <h2 *ngIf="toAssign != null">Assign collaborator <b>{{toAssign.firstName}} {{toAssign.lastName}}</b> to a team</h2>
+    <br>
+    <select [(ngModel)]="inviteTeam" class="form-control m-b select" >
+      <option value="{{-1}}" selected style="color: grey">No team</option>
+      <option value="{{team.id}}" *ngFor="let team of teams">
+        {{team.name}}
+      </option>
+    </select>
+    <div style="height: 10px">
+      <div *ngIf="showTeamError" style="margin-left: 20px;margin-top: -10px;float:right;margin-right: 20px;color: #d9534f">Team required !</div>
+    </div>
+    <br>
+    <p>Role : </p>
+    <select [(ngModel)]="assignedRole" class="form-control m-b select" >
+      <option value="Development team" selected>Development team</option>
+      <option value="SCRUM Master">SCRUM Master</option>
+      <option value="Product owner">Product owner</option>
+    </select>
+    <hr style="margin-bottom: -30px;margin-top: 35px">
+    <button type="button" class="btn btn-success" *ngIf="toAssign != null" (click)="assignToTeam()">
+      <div *ngIf="saving" style="width: 100%;display: flex;justify-content: center">
+     <mat-spinner color="accent" [diameter]="22" ></mat-spinner>
+      </div>
+      <span *ngIf="!saving">Assign</span>
+    </button>
+    <button type="button" class="btn btn-danger" (click)="cancelInvite()">Cancel</button>
+  </div>
+</div>

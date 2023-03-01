@@ -1,0 +1,166 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+      <h2>Kanban Board</h2>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="">SRS</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a>Kanban Board</a>
+        </li>
+        <li class="breadcrumb-item active">
+          <strong>C2 β5.0</strong>
+        </li>
+      </ol>
+    </div>
+    <div class="col-sm-2">
+      <div class="title-action">
+          <button (click)="modalVisibility = false" class="btn btn-primary">+ Add Column</button>
+      </div>
+    </div>
+</div>
+
+<div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;" [hidden]="modalVisibility" *ngIf="board.columns.length < 6">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" (click)="modalVisibility = true" style="padding-top: 6%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">Add Column</h4>
+          </div>
+          <div class="modal-body">
+            <div class="details">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="title">Title :</label>
+                <div class="col-sm-10"><input type="text" class="form-control" [(ngModel)]="columnTitle"></div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-white" (click)="modalVisibility = true">Close</button>
+              <button type="button" class="btn btn-primary" (click)="modalVisibility = true; addColumn()">Add</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;" [hidden]="modalVisibility" *ngIf="board.columns.length === 6">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" (click)="modalVisibility = true" style="padding-top: 6%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">Error !</h4>
+          </div>
+          <div class="modal-body">
+              <div class="details">
+                  Can't add more than 6 columns
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-white" (click)="modalVisibility = true">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="form-group row  ml-3">
+  <label class="col-form-label m-t"><strong>Project</strong></label>
+  <div class="col-sm-4">
+    <select class="form-control m-t" name="account" [(ngModel)]="selectedProjectId" (change)="onChangeProject($event.target.value)">
+      <option *ngFor="let prj of projects" value="{{prj.id}}">{{prj.name}}</option>
+    </select>
+  </div>
+  <label class="col-form-label m-t ml-3" *ngIf="selectedProjectId != undefined"><strong>Version</strong></label>
+  <div class="col-sm-4">
+    <select class="form-control m-t" name="account" [(ngModel)]="selectedVersionId" (change)="onChangeVersion($event.target.value)" *ngIf="selectedProjectId != undefined">
+      <option *ngFor="let v of versions" value="{{v.id}}">{{v.number}}</option>
+    </select>
+  </div>
+</div>
+
+<div *ngIf="selectedProjectId == undefined" class="wrapper wrapper-content">
+  <div class="middle-box text-center animated fadeInRightBig">
+      <h3 class="font-bold">No project is currently selected</h3>
+  </div>
+</div>
+
+<div *ngIf="selectedVersionId == undefined" class="wrapper wrapper-content">
+  <div class="middle-box text-center animated fadeInRightBig">
+      <h3 class="font-bold">No version of a project is currently selected</h3>
+  </div>
+</div>
+
+<div class="card-text text-center" style="margin-top: 30px" [hidden]="!isLoading" *ngIf="isLoading">
+  <div class="sk-spinner sk-spinner-three-bounce">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
+</div>
+
+<div class="bord-wrapper" *ngIf="!isLoading && selectedVersionId != undefined">
+    <div class="columns" cdkDropListGroup>
+        <div class="column ibox" *ngFor="let column of board.columns">
+
+        <div class="column-head">
+            <div class="column-title">
+                <h2>{{ column.name }}</h2>
+                <div id="nestable-menu" style="margin: 5px 0px 0px 0px;">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="deleteColumn(column.id)" [disabled]="column.tasks.length !== 0">
+                    <mat-icon>delete_forever</mat-icon>
+                    <span>Delete Column</span>
+                  </button>
+                  <button mat-menu-item (click)="UpdateColumnVisibility = false; idColumn = column.id">
+                    <mat-icon>mode_edit</mat-icon>
+                    <span>Update Title</span>
+                  </button>
+                </mat-menu>
+            </div>
+          </div>
+            <hr>
+        </div>
+
+            <div class="tasks-container" 
+                cdkDropList
+                [cdkDropListData]="column.tasks"
+                (cdkDropListDropped)="drop($event, column.id)">
+
+                <div class="task" *ngFor="let item of column.tasks" cdkDrag>
+                    <div class="task-title" style="width: 100%;">
+                      {{ item.title }}
+                    </div>
+                    <div class="client-avatar m-t" attr.data-title="Responsable : {{item.responsible.full_name}}">
+                      <img alt="image"  class="rounded-circle avatar member-photo avatar-sm" src="../../../assets/images/face.png">
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;" [hidden]="UpdateColumnVisibility">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" (click)="UpdateColumnVisibility = true" style="padding-top: 6%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">Update Column</h4>
+          </div>
+          <div class="modal-body">
+              <div class="details">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label" for="title">Title :</label>
+                    <div class="col-sm-10"><input type="text" class="form-control" [(ngModel)]="columnTitle"></div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-white" (click)="UpdateColumnVisibility = true">Close</button>
+              <button type="button" class="btn btn-primary" (click)="UpdateColumnVisibility = true; updateColumn()">Update</button>
+          </div>
+      </div>
+  </div>
+</div>

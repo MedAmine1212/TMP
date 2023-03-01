@@ -1,0 +1,51 @@
+#event-modal {
+    margin-top: 10%;
+}
+
+.modal-dialog {
+    width: 100%;
+}
+
+.modal-body {
+    display: flex;
+    align-items: center;
+}
+
+.modal-header {
+    padding-top: 3% !important;
+    padding-bottom: 3% !important;
+}
+
+img {
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.black-bg {
+    height: 100%;
+    width: 9999px;
+    background-color: #000000;
+    position: absolute;
+    top: 0;
+    left: -1000px;
+    z-index: 1000;
+    opacity: 0.5;
+}
+
+input[type="radio"]:checked + label[for^=calendar] {
+    color: #ffffff;
+    font-weight: bold;
+    background: #1ab394;
+}
+
+.filter-btn {
+    cursor: pointer;
+}

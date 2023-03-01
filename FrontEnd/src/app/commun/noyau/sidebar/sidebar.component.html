@@ -1,0 +1,83 @@
+<div class="sidebar">
+    <div class="header">
+        <img src="../../../../assets/images/sidebar_header.png" alt="">
+    </div>
+    <div class="top-menu">
+        <input type="text" size="15" placeholder="Search...">
+        <div class="quick-btn">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+    </div>
+    <div class="main-menu">
+        <div routerLink="/tmp" class="menu-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
+        </div>
+        <div routerLink="/tmp/profile" class="menu-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+        </div>
+        <div routerLink="/tmp/calendar" class="menu-item">
+            <i class="fa-solid fa-calendar"></i>
+            <span>Calendar</span>
+        </div>
+        <div routerLink="/tmp/invitation" class="menu-item">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Teammates</span>
+        </div>
+        <div class="menu-item expand" (click)="projectsVisibility = !projectsVisibility">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span>Projects</span>
+            <i class="fa-solid fa-angle-down float-right" [hidden]="!projectsVisibility"></i>
+            <i class="fa-solid fa-angle-up float-right" [hidden]="projectsVisibility"></i>
+        </div>
+        <div class="children-group" [hidden]="projectsVisibility">
+            <div routerLink="/tmp/projects" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Project</span>
+            </div>
+            <div routerLink="/tmp/versions" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Versions</span>
+            </div>
+            <div routerLink="/tmp/functionallist/2" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Functionals</span>
+            </div>
+            <div routerLink="/tmp/KanbanBoard" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Kanban</span>
+            </div>
+            <div routerLink="/tmp/labels" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Labels</span>
+            </div>
+        </div>
+        <div class="menu-item expand" (click)="teamsVisibility = !teamsVisibility">
+            <i class="fa-solid fa-sitemap"></i>
+            <span>Teams</span>
+            <i class="fa-solid fa-angle-down float-right" [hidden]="!teamsVisibility"></i>
+            <i class="fa-solid fa-angle-up float-right" [hidden]="teamsVisibility"></i>
+        </div>
+        <div class="children-group" [hidden]="teamsVisibility">
+            <div routerLink="/tmp/team" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Team</span>
+            </div>
+            <div routerLink="/tmp/teamInvitations" class="menu-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Invitations</span>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <hr style="width: 100%; margin: 0; background-color:white;">
+        <div class="profile-infos">
+            <div class="picture"></div>
+            <div class="infos">
+                <span>Eric Perdon</span>
+                <span class="role">Product Owner</span>
+            </div>
+        </div>
+    </div>
+</div>

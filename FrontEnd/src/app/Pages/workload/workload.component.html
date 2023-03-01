@@ -1,0 +1,60 @@
+
+  <article @animSlider *ngIf="selectedTeam == null" style="margin-right: 10px;width: 100%;margin-bottom:30px" class="leaderboard">
+    <header>
+      <h1 class="leaderboard__title" style="color:#5bc0de"><span class="leaderboard__title--top">Scrum teams</span><span class="leaderboard__title--bottom">List</span></h1>
+      <br>
+      <div class="searchDiv">
+        <input id="searchInput" @inputSlider *ngIf="showSearch" type="text" [(ngModel)]="search" class="searchInput"/>
+        <span (click)="showSearch = true;focus()" *ngIf="!showSearch" style="cursor: pointer;color: white"><i class="fa fa-search"></i></span>
+        <span (click)="showSearch = false;search = ''" *ngIf="showSearch" matTooltip="Close search input" style="cursor: pointer;color: white"><i class="fa fa-circle-xmark"></i></span>
+      </div>
+    </header>
+    <main style="min-height: 400px;" class="leaderboard__profiles">
+
+      <div style="float: right;width: 500px">
+      <mat-form-field style="width: 100%;font-size: 20px;color: black">
+        <mat-date-range-input style="display: none" [rangePicker]="picker">
+          <input matStartDate style="display: none" [(ngModel)]="startInput" (dateChange)="startDateChanged($event)">
+          <input matEndDate style="display: none" [(ngModel)]="endInput"  (dateChange)="endDateChanged($event)">
+        </mat-date-range-input>
+        <div *ngIf="endDate != '' && startDate != ''" style="width: 100%;display: flex;justify-content: center;color: black;opacity: 0.7;font-size: 17px">
+          Range set from <span style="margin-left: 5px;margin-right: 5px"><b>{{startDate | date: 'dd MMMM yyyy'}}</b></span> to <span style="margin-left: 5px;"><b>{{endDate | date: 'dd MMMM yyyy'}}</b></span>
+          <span (click)="clearRange()" matTooltip="Clear range" style="margin-left: 40px;cursor: pointer;color: black"><i class="fa fa-circle-xmark"></i></span>
+        </div>
+        <mat-datepicker-toggle matTooltip="Date range picker" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+        </div>
+      <br><br>
+      <div class="card-text text-center" style="margin-top: 50px" *ngIf="loading">
+        <div class="sk-spinner sk-spinner-three-bounce">
+          <div class="sk-bounce1"></div>
+          <div class="sk-bounce2"></div>
+          <div class="sk-bounce3"></div>
+        </div>
+      </div>
+      <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: 20px" *ngIf="allTeams.length == 0 && !loading">
+        No teams to show
+      </div>
+      <div style="max-height: 400px;min-height: 400px;overflow-y: auto;overflow-x: hidden;width: 100%;align-content: center" *ngIf="allTeams.length > 0 && !loading">
+      <article  style="margin-left: 10%" (click)="selectedTeam = team" *ngFor="let team of displayList | filter : search" class="leaderboard__profile">
+        <div class="info">
+          <div *ngIf="team.working != null" style="float: right" class="activity-info-box time">
+                <div class="info-icon-wrapper">
+                  <span><i class="fa-regular fa-clock"></i></span>
+                </div>
+                <div class="info-text-wrapper">
+                  <span class="info-text-upper">{{getTimeString(team.totalWorkTime)}}</span>
+                  <span class="info-text-bottom">Total worktime</span>
+                </div>
+              </div>
+           <span class="leaderboard__name scrum" style="font-size:13px;margin-right: 27px;color:#d9534f;margin-top: 30px" *ngIf="team.working == null" matTooltip="Not working on any projects">Not currently active</span>
+         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+        <span class="leaderboard__name" style="font-size: 17px" matTooltip="Team name">{{team.name}}</span><br>
+        <span class="leaderboard__name email" style="font-size: 17px" matTooltip="Creation date">{{team.creationDate | date: 'dd MMMM yyyy'}}</span><br>
+        </div>
+      </article>
+     </div>
+    </main>
+  </article>
+<app-workload-details *ngIf="selectedTeam != null" [parent]= "this" [selectedTeam]="selectedTeam"></app-workload-details>

@@ -1,0 +1,21 @@
+.jstree-open > .jstree-anchor > .fa-folder:before {
+    content: "\f07c";
+}
+
+.jstree-default .jstree-icon.none {
+    width: 0;
+}
+
+table tbody tr{
+    cursor:pointer;
+    transition:0.1s ease-in-out background-color;
+}
+
+table tbody tr:hover{
+    background-color: #1ab394;
+    color: white;
+}
+
+#label_selected{
+    color:#1ab394;
+}

@@ -1,0 +1,118 @@
+.main-menu::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100%;
+    background-color: #263949;
+    position: relative;
+}
+
+.header img {
+    width: 90%;
+}
+
+.top-menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quick-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.quick-btn i {
+    color: #263949;
+    font-size: 1.2em;
+}
+
+.top-menu input {
+    height: 35px;
+    border-radius: 15px;
+    border: none;
+    padding-left: 10px;
+    margin-right: 8px;
+}
+
+.main-menu{
+    margin-top: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    color: white;
+    max-height: 450px;
+    min-height: 450px;
+    overflow-y: auto;
+}
+
+.menu-item {
+    font-size: 1.3em;
+    cursor: pointer;
+    padding: 15px;
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.menu-item:hover {
+    background-color: white;
+    border-radius: 30px;
+    color: #263949;
+}
+
+.sidebar-footer {
+    width: 220px;
+    height: 80px;
+    position: fixed;
+    margin-top: 40px;
+}
+
+.profile-infos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picture {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 100%;
+    margin-right: 20px;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: white;
+}
+
+.role {
+    font-size: 0.8em;
+    color: rgb(235, 235, 235);
+    font-weight: 200;
+}
+
+.expand {
+    padding-right: 0 !important;
+}
+
+.children-group {
+    font-size: 0.9em;
+    font-weight: 200;
+    padding-left: 30px;
+}

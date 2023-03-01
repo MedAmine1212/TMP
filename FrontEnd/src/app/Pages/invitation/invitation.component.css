@@ -1,0 +1,22 @@
+.ibox {
+    max-width: 47% !important;
+    display: inline-block;
+    min-width: 47%;
+}
+
+.sent-invitations{
+    margin-right: 30px;
+}
+
+.search-btn {
+    max-width: 30%;
+}
+
+.ibox-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.invite {
+    position: absolute;
+}

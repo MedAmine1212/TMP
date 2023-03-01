@@ -1,0 +1,235 @@
+.ibox-content{
+    margin-top: 1.5%;
+}
+.footable-row-detail-row{
+    margin-bottom: 3%;
+    margin-top: 1%;
+}
+.footable-row-detail-name{
+    font-weight: bold;
+}
+.text-right .footable-visible .footable-last-column{
+    padding-right: 15%;
+}
+
+
+
+/* modal css */
+
+.title{
+    display: flex;
+    margin-top: 2%;
+}
+
+.title1{
+   display: flex;
+}
+/* .breadcrumb{margin-left: 15%;
+} */
+.left{
+    margin-left: 3%;
+}
+.col-lg-5{
+    margin-top: 6%;
+}
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+
+  mat-expansion-panel.parentPanel {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .parentPanel_header {
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  }
+  .childPanelCount{
+    opacity: 50%;
+  }
+  
+  .parentPanel mat-expansion-panel.childPanel {
+    margin-top: 1em !important;
+  }
+  
+  ::ng-deep .childPanel div.mat-expansion-panel-body {
+    padding-bottom: 0 !important;}
+
+  
+  
+  .modal-dialog {
+      width: 120%;
+   
+  }
+  
+  .modal-body {
+      display: flex;
+      align-items: center;
+  }
+  
+  .modal-header {
+      padding-top: 3% !important;
+      padding-bottom: 3% !important;
+  }
+  .black-bg {
+    height: 100%;
+    width: 9999px;
+    background-color: #000000;
+    position: absolute;
+    top: 0;
+    left: -1000px;
+    z-index: 10;
+    opacity: 0.5;
+   bottom: 0;
+}
+.modal-dialog{
+  max-width: 500px !important;
+  width: 550px !important;
+
+}
+
+.modal-content{
+  height: fit-content;
+  margin-top: 10%;
+  box-shadow: none !important;
+}
+.text{
+  margin-left: 3%;
+}
+.icon{
+  margin-right: 2%;
+}
+
+.panels-container {
+  max-width: 150%;
+  width: 100%;
+}
+.note-editable.card-block{
+  margin-left: 12%;
+}
+
+.modal-title{
+ 
+  color: #1ab394;
+  font-size: 12px;
+  font-weight: bold;
+
+}
+
+.float-left label {
+  margin-top: 5%;
+}
+
+
+/* color picker formulaire */
+
+/* input {
+  width: 150px;
+  margin-bottom: 16px;
+}
+
+.cmyk-text {
+  float: left;
+
+  width: 72px;
+  height: 72px;
+
+  font-weight: bolder;
+  line-height: 72px;
+  text-align: center;
+  text-shadow: 1px 1px 2px #bbb;
+}
+
+.color-box {
+  width: 100px;
+  height: 35px;
+  top: 150px;
+  cursor: pointer;
+  margin-right: 80%;
+  border-radius: 5%;
+}
+
+.change-me {
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+
+button.btn.btn-w-m.btn-default{
+  height: 30px;
+}
+
+.color-picker{
+  background-color: rgb(228, 11, 11);
+  border:none;
+}
+
+th.footable-visible.footable-sortable{
+  margin-left: 80%;
+}
+
+button.btn.btn-primar{color:beige} */
+
+
+input {
+  width: 150px;
+  margin-bottom: 16px;
+}
+
+.cmyk-text {
+  float: left;
+
+  width: 72px;
+  height: 72px;
+
+  font-weight: bolder;
+  line-height: 72px;
+  text-align: center;
+  text-shadow: 1px 1px 2px #bbb;
+}
+
+.color-box {
+  width: 100px;
+  height: 35px;
+  top: 150px;
+  cursor: pointer;
+ /* margin-left: 150%; */
+  border-radius: 5%;
+}
+div.color-picker.open{
+  margin-left: 80%;
+}
+
+.change-me {
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+button.btn.btn-w-m.btn-default{
+  height: 40px;
+}

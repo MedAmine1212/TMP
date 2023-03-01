@@ -1,0 +1,31 @@
+<div class="btn-group">
+    <button class="btn btn-white" (click)="toggleShow()" name="choice">{{ getButtonName() }}</button>
+</div>
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div  class="col-lg-4">
+                <app-exigences [version] = 2></app-exigences>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<style>
+    .light-skin {
+    padding: 30px 10px;
+    text-align: center;
+    background: url(css/patterns/ls.png) repeat scroll 0 110px;
+    }
+    .light-skin:hover {
+    background: url(css/patterns/ls.png) repeat scroll 0 140px;
+    }
+    .ultra-skin {
+    padding: 10px 10px;
+    }
+    .light-skin a {
+    color: #525252;
+    font-weight: bold;
+    }
+    </style>

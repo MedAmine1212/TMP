@@ -1,0 +1,38 @@
+#search-input {
+    max-width: 20%;
+    display: inline;
+}
+
+#add-btn {
+    display: inline;
+}
+
+#project-modal {
+    margin-top: 6.5%;
+}
+
+.modal-dialog {
+    width: 32%;
+    max-width: 32% !important;
+}
+
+.modal-title {
+    font-size: 1.4em !important;
+    font-weight: 600 !important;
+}
+
+.modal-header {
+    padding-top: 1.5% !important;
+    padding-bottom: 1.5% !important;
+}
+
+.black-bg {
+    height: 100%;
+    width: 9999px;
+    background-color: #000000;
+    position: absolute;
+    top: 0;
+    left: -1000px;
+    z-index: 1000;
+    opacity: 0.5;
+}

@@ -1,0 +1,88 @@
+<body>
+    <div class="stepper" *ngIf="!tokenExpired&&tokenValid">
+        <mat-vertical-stepper [linear]="false" #stepper [animationDuration]="200">
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Fill out your name</ng-template>
+                    <mat-form-field>
+                        <input matInput placeholder="First name Last name" formControlName="firstCtrl" required
+                            pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)">
+                    </mat-form-field>
+
+                    <div style="color: red; font-size: smaller;"
+                        *ngIf="  firstFormGroup?.touched &&  firstFormGroup?.invalid ">
+
+                        Your first and last name must be separated by a space!
+                    </div>
+                    <div>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>Enter your phone number</ng-template>
+                    <mat-form-field>
+                        <input matInput placeholder="Phone number" formControlName="secondCtrl" required
+                            pattern="[0-9]{8}">
+
+                    </mat-form-field>
+                    <div style="color: red; font-size: smaller;"
+                        *ngIf="  secondFormGroup?.touched &&  secondFormGroup?.invalid">
+
+                        Your phone number is invalid
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+                <form [formGroup]="thirdFormGroup">
+                    <ng-template matStepLabel>Choose a password</ng-template>
+                    <mat-form-field>
+                        <input matInput placeholder="New password" type="password" formControlName="thirdCtrlPassword"
+                            required maxlength="16" minlength="8">
+                    </mat-form-field>
+                    <div style="color: red; font-size: smaller;" *ngIf="  password?.touched &&  password?.invalid">
+
+                        Password must contains at least 8 characters (with a maximum of 16)
+                    </div>
+                    <mat-form-field>
+                        <input matInput placeholder="Confirm password" type="password"
+                            formControlName="thirdCtrlConfirmPassword" required>
+                    </mat-form-field>
+                    <div style="color: red; font-size: smaller;"
+                        *ngIf="  confirmPassword?.touched && confirmPassword?.invalid ">
+
+                        Password must match
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                Accept your registration invitation ?
+                <div>
+                    <button mat-button (click)="submit()"
+                        [disabled]="!firstFormGroup.valid||!secondFormGroup.valid||!thirdFormGroup.valid">Confirm</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                </div>
+                <div style="color:red ;" *ngIf="!firstFormGroup.valid||!secondFormGroup.valid||!thirdFormGroup.valid">
+                    Please check your
+                    informations</div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+    <div *ngIf="tokenExpired">
+        <h1>Your token has expired, contact your team's product owner to recieve a new invitation</h1>
+    </div>
+    <div *ngIf="!tokenValid">
+        <h1>Your token is not valid, contact your team's product owner to recieve a new invitation</h1>
+    </div>
+
+</body>

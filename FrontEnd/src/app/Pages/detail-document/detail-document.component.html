@@ -1,0 +1,78 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+      <h2>Documents</h2>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="">SRS</a>
+          </li>
+          <li routerLink="/tmp/documents"class="breadcrumb-item">
+              <a>Documents</a>
+          </li>
+          <li class="breadcrumb-item active">
+              <strong>Details documents</strong>
+          </li>
+      </ol>
+  </div>
+  <div class="col-sm-2">
+    <div class="title-action">
+        <a routerLink="/tmp/AddDocuments" class="btn btn-primary">+ Documents</a>
+
+    </div>
+</div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+  <div class="row">
+      <div class="col-lg-12">
+
+          <div class="ibox product-detail">
+              <div class="ibox-content">
+
+                  <div class="row">
+
+                      <div class="col-md-12">
+                        <span class="float-right"  style="color: #1ab394;">
+                          Créer le - <i class="fa fa-clock" aria-hidden="true"></i>  {{documents.creationDate}}
+                      </span>
+                          <h1 > <h1  class="font-bold m-b-xs" style="color: #1ab394;" > {{documents.title}}</h1>
+                          </h1>
+
+
+
+
+
+                          <hr>
+
+                          <h1 class="font-bold m-b-xs"  style="color: #1ab394;"> Categorie : </h1>
+
+                          <div class="m-t-md">
+                            <h2 class="product-main-price"> - {{documents.category}} </h2>
+                        </div>
+
+                          <h1 class="font-bold m-b-xs" style="color: #1ab394;"> Description : </h1>
+
+                          <div [innerHtml]="documents.description" >
+
+
+
+                          </div>
+
+
+
+
+
+                      </div>
+                  </div>
+
+              </div>
+
+          </div>
+
+      </div>
+  </div>
+
+
+
+
+
+</div>

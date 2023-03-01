@@ -1,0 +1,2538 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TsunamiIT Manager Project API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User login",
+                "description": "this route allow collaborator to sign in ",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "ericperdon@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Credentials are valid and generate a token"
+                    },
+                    "401": {
+                        "description": "Credentials not valid  "
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User authenticated",
+                "description": "this route return user authenticated ",
+                "operationId": "user",
+                "responses": {
+                    "200": {
+                        "description": "returns user authenticated"
+                    },
+                    "401": {
+                        "description": "No user authenticated "
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User logout",
+                "description": "this route allow user to logout  ",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "logout successful"
+                    },
+                    "401": {
+                        "description": "No user authenticated "
+                    }
+                }
+            }
+        },
+        "/api/getCollaborators": {
+            "get": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Returns all collaborators",
+                "operationId": "f881feca0aba4309b00aa8b17a9808f8",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/collaborator/{idCollaborator}": {
+            "get": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Returns Collaborator By ID",
+                "operationId": "587a23ff17b1c1cfa63846564ec90968",
+                "parameters": [
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "404": {
+                        "description": "Project not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Update Collaborator ( first name, last name, email, phone )",
+                "operationId": "5d8e7ec7e4930371c124911590195c29",
+                "parameters": [
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "firstName": {
+                                        "type": "string",
+                                        "example": "Rachid"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": "Gagnon"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "rachid@gmail.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "20 000 000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update successfull"
+                    },
+                    "404": {
+                        "description": "Collaborator not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/nonActiveCollab/": {
+            "get": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Returns all non Collaborator",
+                "operationId": "7000c07b21786b853e93a4878c7b7d89",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "404": {
+                        "description": "Project not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/sendEmailInvitation": {
+            "post": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Send an email  ",
+                "description": "this route allow admin to send an invitation to colloaborator ",
+                "operationId": "sendEmailInvitation",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "reciever"
+                                ],
+                                "properties": {
+                                    "reciever": {
+                                        "type": "string",
+                                        "example": "tsunamitit.tmp@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Invitation sent successfully"
+                    },
+                    "400": {
+                        "description": "Invitation already exist and valid"
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/verifyInvitationToken": {
+            "post": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Verify token  ",
+                "description": "this route verify token  ",
+                "operationId": "verifyInvitationToken",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "invitationToken"
+                                ],
+                                "properties": {
+                                    "invitationToken": {
+                                        "type": "string",
+                                        "example": "xxxxx"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token valid"
+                    },
+                    "400": {
+                        "description": "Token Expired"
+                    },
+                    "404": {
+                        "description": "Token dont exist"
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/createAccountCollaborator": {
+            "post": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Create account for a collaborator  ",
+                "description": "this route allow the collaborator to create an account ",
+                "operationId": "createAccountCollaborator",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "invitationToken"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "ryadh mahrez"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "90120933"
+                                    },
+                                    "invitationToken": {
+                                        "type": "string",
+                                        "example": "xxxxx"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Token Not found "
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/deleteCollaborator/{idCollaborator}": {
+            "delete": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Delete a collaborator,set status to -1",
+                "operationId": "deleteCollaborator",
+                "parameters": [
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "collaborator not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/getInvitesByCollabId/{id}": {
+            "get": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Returns all invitaions for a certain collaborator",
+                "operationId": "42aebb02f62aa7ada2e930b3c315b516",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/getCurrentScrumTeam/{id}": {
+            "get": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Get Collaborator's current active ScrumTeam",
+                "operationId": "01f5af4c3ef89dd6f7fc8568d841b531",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/uploadPicture/{idCollaborator}": {
+            "post": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "upload a picture for a collaborator",
+                "operationId": "uploadPicture",
+                "parameters": [
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": " Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "picture"
+                                ],
+                                "properties": {
+                                    "picture": {
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Collaborator not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "description": "Swagger docs initialization",
+                "operationId": "1e473169c2b94d08d389e5c88cd8610d",
+                "responses": {
+                    "default": {
+                        "description": "Swagger init"
+                    }
+                }
+            }
+        },
+        "/api/forgotPasswordRequest": {
+            "post": {
+                "tags": [
+                    "Forgot password"
+                ],
+                "summary": "forgot password request  ",
+                "description": "this route allow admin to send an email to reset collaborator's password",
+                "operationId": "forgotPasswordRequest",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "tsunamitit.tmp@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Forgot password request created successfully"
+                    },
+                    "404": {
+                        "description": "Email not found "
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/forgetPasswordVerifyToken": {
+            "post": {
+                "tags": [
+                    "Forgot password"
+                ],
+                "summary": "Verify token   ",
+                "description": "this route verify token for forgot password  ",
+                "operationId": "forgetPasswordVerifyToken",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "xxxxx"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token valid"
+                    },
+                    "400": {
+                        "description": "Token Expired"
+                    },
+                    "404": {
+                        "description": "Token dont exist"
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/functionalrequirement/{id}": {
+            "get": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Get functional requirements data by id, (*estimationTime & elapsedTime in minutes*)",
+                "operationId": "5209920a4f35aa3d1b4ff0f224dc81be",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Functional requirement ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Functionnal requirement not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/functionalrequirement/update/{id}": {
+            "put": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Update functional requirement (Description, elapsedTime, estimationTime, responsible)",
+                "operationId": "6099c6146c1e148ba3ec40ef2f864600",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Functional requirement to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "example": "New description"
+                                    },
+                                    "elapsedTime": {
+                                        "type": "integer",
+                                        "example": 4800
+                                    },
+                                    "estimationTime": {
+                                        "type": "integer",
+                                        "example": 7200
+                                    },
+                                    "responsible": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update successfull"
+                    },
+                    "404": {
+                        "description": "Functional requirement not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/functionalrequirementStatusKanban/update/{id}": {
+            "put": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Update functional requirement statusKanban By its Id",
+                "operationId": "691aab3865f4c403471dc4a0d12ab26a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Functional requirement to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "statusKanban": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update successfull"
+                    },
+                    "404": {
+                        "description": "Functional requirement not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/version/{idVersion}/functionalrequirements": {
+            "get": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Returns all functional requirements of a version",
+                "operationId": "213c414260a72d5c18ed6af7b8ad873f",
+                "parameters": [
+                    {
+                        "name": "idVersion",
+                        "in": "path",
+                        "description": "Version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Version not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Add a functional requirement",
+                "operationId": "867c07f23d13402a15769f50b2af806f",
+                "parameters": [
+                    {
+                        "name": "idVersion",
+                        "in": "path",
+                        "description": " Version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title,description,parentId,author,estimationTime"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Functional requirement description"
+                                    },
+                                    "parentId": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "author": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "estimationTime": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Version not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/version/{idVersion}/calendar_functional_requirements": {
+            "get": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Returns the title, the author's name, start date, projected end and status of a Functional Requirements by version",
+                "operationId": "8416ad8622acfcaec3300d2570593c03",
+                "parameters": [
+                    {
+                        "name": "idVersion",
+                        "in": "path",
+                        "description": "Version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Version not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/version/{idVersion}/multiple-functional-requirements": {
+            "post": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Insert several functional requirements",
+                "operationId": "03dea285cfec0f9bf7c4d88a28ceb457",
+                "parameters": [
+                    {
+                        "name": "idVersion",
+                        "in": "path",
+                        "description": "Version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Set of requirements to be inserted",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "functional_requirements": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "author": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "New description for the functional requirement"
+                                                },
+                                                "parentID": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": [
+                                            {
+                                                "author": 1,
+                                                "description": "Exemple 1",
+                                                "parentId": 1
+                                            },
+                                            {
+                                                "author": 1,
+                                                "description": "Exemple 2",
+                                                "parentId": 1
+                                            }
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Version not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/functionalrequirement/{idFunctionalrequirement}": {
+            "delete": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Delete a functional requirement",
+                "operationId": "52d2439e7149a3dc29b70352cb6c4052",
+                "parameters": [
+                    {
+                        "name": "idFunctionalrequirement",
+                        "in": "path",
+                        "description": "Functional requirement ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Functional requirement not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/multiple-functional-requirements": {
+            "delete": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Delete several functional requirements",
+                "operationId": "18392887373343c8cb883a470012e9c6",
+                "requestBody": {
+                    "description": "Set of requirements to be deleted",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "functional_requirements": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": " Some functional requirement not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/functional-requirements-titles": {
+            "put": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Modify Functional Requirements titles",
+                "operationId": "9cd22e048aacfc95454e4ca1d017b68f",
+                "requestBody": {
+                    "description": "Set of peers ID and title",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "frsToUpdate": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "parent": {
+                                                    "type": "string",
+                                                    "example": "New title"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": [
+                                            {
+                                                "id": 2,
+                                                "description": "New title for ID 2"
+                                            },
+                                            {
+                                                "id": 3,
+                                                "description": "New title for ID 3"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/updateHierarchy": {
+            "put": {
+                "tags": [
+                    "Functional Requirements"
+                ],
+                "summary": "Update an hierarchy",
+                "operationId": "1e4192631649b6b9a3bf2825434bff0b",
+                "requestBody": {
+                    "description": "Set of peers ID and ParentID",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "frsToUpdate": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "parentId": {
+                                                    "type": "integer",
+                                                    "example": "2"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "example": [
+                                            {
+                                                "id": 2,
+                                                "parentId": 1
+                                            },
+                                            {
+                                                "id": 3,
+                                                "parentId": 2
+                                            }
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Functional requirement not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/assignCollaboratorToScrumTeam": {
+            "post": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Assignment of a collaborator to a team",
+                "operationId": "5a1593ab810575994cbde7bd522f25f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idCollaborator,idSCRUMTeam,role"
+                                ],
+                                "properties": {
+                                    "idCollaborator": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "idScrumTeam": {
+                                        "type": "intger",
+                                        "example": 0
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "SCRUM Master"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/scrumteam/{idSCRUMTeam}/remove/{idCollaborator}": {
+            "delete": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Remove a collaborator from a team",
+                "operationId": "6805234941db05e6dcf77f10d2d5a415",
+                "parameters": [
+                    {
+                        "name": "idSCRUMTeam",
+                        "in": "path",
+                        "description": "SCRUM Team ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Collaboration not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/cancelInvite/{id}": {
+            "delete": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Cancel pending invication",
+                "operationId": "21afcf81b9010002b8f954c14b054831",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Invitation id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Collaboration not found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/scrumteam/{idSCRUMTeam}/collaborator/{idCollaborator}/role": {
+            "put": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Update the role of a collaborator in a team",
+                "operationId": "2cb560637a39d583f84b2cdfd0f6c8e2",
+                "parameters": [
+                    {
+                        "name": "idSCRUMTeam",
+                        "in": "path",
+                        "description": "SCRUM Team ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "role"
+                                ],
+                                "properties": {
+                                    "role": {
+                                        "type": "string",
+                                        "example": "developer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/acceptInvitation/{id}": {
+            "get": {
+                "tags": [
+                    "Collaborator"
+                ],
+                "summary": "Accept invitaion (set status to 1)",
+                "operationId": "8cdc73ab32e7deeb9343e050eca0b989",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Invitation ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Accept invitaion and return the current team"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/sendEmail": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Send an email  ",
+                "description": "this route allow admin to send a simple email ",
+                "operationId": "sendEmail",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "body"
+                                ],
+                                "properties": {
+                                    "reciever": {
+                                        "type": "string",
+                                        "example": "tsunamitit.tmp@gmail.com"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "example": "email subject"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "email body"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Email sent successfully"
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/scrumteam/{idSCRUMTeam}/meeting": {
+            "post": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "Create meeting for a scrum team",
+                "operationId": "93ed0544b5cb8a44758d019aa34bc031",
+                "parameters": [
+                    {
+                        "name": "idSCRUMTeam",
+                        "in": "path",
+                        "description": "Scrum team ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "date"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "meeting1"
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "example": "2022-08-30 10:02:05"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Token Not found "
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/meeting/{idMeeting}/addCollaborator": {
+            "post": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "add collaborator to meeting",
+                "operationId": "3282c38fd7a7f15c3a64fc770b89039a",
+                "parameters": [
+                    {
+                        "name": "idMeeting",
+                        "in": "path",
+                        "description": "meeting ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idCollaborator"
+                                ],
+                                "properties": {
+                                    "idCollaborator": {
+                                        "type": "string",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Token Not found "
+                    },
+                    "500": {
+                        "description": "Server Error  "
+                    }
+                }
+            }
+        },
+        "/api/scrumteam/{idSCRUMTeam}/meetings": {
+            "get": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "Returns meetings by scrum team ",
+                "operationId": "7658f6e765dd8d087bd396adf0ad1125",
+                "parameters": [
+                    {
+                        "name": "idSCRUMTeam",
+                        "in": "path",
+                        "description": "Scrum team ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    }
+                }
+            }
+        },
+        "/api/collaborator/{idCollaborator}/meetings": {
+            "get": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "Returns meetings by collaborator ",
+                "operationId": "9a66350d793164e2216a1e036e9157b4",
+                "parameters": [
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    }
+                }
+            }
+        },
+        "/api/meeting/{idMeeting}/uninvited": {
+            "get": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "Returns uninvited collaborators ",
+                "operationId": "79fc068ebf2360f7154e3459f40f827c",
+                "parameters": [
+                    {
+                        "name": "idMeeting",
+                        "in": "path",
+                        "description": "Meeting ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    }
+                }
+            }
+        },
+        "/api/joinmeeting/{idJoinMeeting}/declareAbsence": {
+            "put": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "declare absence",
+                "operationId": "55b0b7be28a94cbd719443adbe92b89c",
+                "parameters": [
+                    {
+                        "name": "idJoinMeeting",
+                        "in": "path",
+                        "description": "Join Meeting ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "joinmeeting not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/joinmeeting/{idJoinMeeting}/cancelInvite": {
+            "delete": {
+                "tags": [
+                    "Meetings"
+                ],
+                "summary": "cancel invitation by deleting joinmeeting row",
+                "operationId": "2c1db0f683920888ea5a13f10b2b4ad5",
+                "parameters": [
+                    {
+                        "name": "idJoinMeeting",
+                        "in": "path",
+                        "description": "Join meeting ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "join meeting not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/project/{idOwner}": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Returns All Project By Owner ID",
+                "operationId": "a5a7424f8ae7d05325dd8949679a168e",
+                "parameters": [
+                    {
+                        "name": "idOwner",
+                        "in": "path",
+                        "description": "Owner ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "404": {
+                        "description": "Project not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/project/{idProject}": {
+            "put": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Update Project name, description and githubRepo",
+                "operationId": "7cd410edebd66ff0e6411e16dc2a37af",
+                "parameters": [
+                    {
+                        "name": "idProject",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Platforme"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Platforme E-learning"
+                                    },
+                                    "githubRepo": {
+                                        "type": "string",
+                                        "example": "github.com/..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Remove a Project If Project  isn't currently being worked on by a SCRUM team",
+                "operationId": "aac8ce98991aa64ee9e5d55440850c30",
+                "parameters": [
+                    {
+                        "name": "idProject",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/api/project": {
+            "post": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Add Project",
+                "operationId": "29c36ea882b930f669023c405ec68290",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name,type,githubRepo"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "IT"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "LMS"
+                                    },
+                                    "githubRepo": {
+                                        "type": "string",
+                                        "example": "MohamedNabli004"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/projects": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Returns all projects",
+                "operationId": "6c7b9ebd190e43515069606a0a422b0e",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "204": {
+                        "description": "Project has no versions yet !"
+                    },
+                    "404": {
+                        "description": "No project found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/collaborator/{idCollaborator}/projects": {
+            "get": {
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Get projects worked on by collaborator",
+                "operationId": "9abdc84d70192f6de4e5f056b75b93ca",
+                "parameters": [
+                    {
+                        "name": "idCollaborator",
+                        "in": "path",
+                        "description": "Collaborator ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "201": {
+                        "description": "No affected team or project !"
+                    }
+                }
+            }
+        },
+        "/api/scrumTeam": {
+            "post": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Create Scrum Team",
+                "operationId": "85bca1d9da6059332f54e7b9fe70f405",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Team Name"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/deleteScrumTeam/{idScrumTeam}": {
+            "delete": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Delete a Scrum Team",
+                "operationId": "199886f0b70b693b7680863950640913",
+                "parameters": [
+                    {
+                        "name": "idScrumTeam",
+                        "in": "path",
+                        "description": "ScrumTeam ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/getAllScrumTeams": {
+            "get": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Returns all ScrumTeams",
+                "operationId": "ce9621fb071623df7dce2495064b9f38",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    }
+                }
+            }
+        },
+        "/api/getScrumTeamsByProductOwner/{idProductOwner}": {
+            "get": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Returns all ScrumTeams by product owner Id",
+                "operationId": "5655734c40c6ff934ff7a211f98c2fb7",
+                "parameters": [
+                    {
+                        "name": "idProductOwner",
+                        "in": "path",
+                        "description": "Product Owner ID",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "201": {
+                        "description": "No team found"
+                    }
+                }
+            }
+        },
+        "/api/getScrumTeamById/{idScrumTeam}": {
+            "get": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Returns the ScrumTeams by Id",
+                "operationId": "8ef44f7710e089a6f260eb652344d0a0",
+                "parameters": [
+                    {
+                        "name": "idScrumTeam",
+                        "in": "path",
+                        "description": "Team ID",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "201": {
+                        "description": "No team found"
+                    }
+                }
+            }
+        },
+        "/api/scrumteam/{idScrumTeam}": {
+            "get": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Returns all Collaborators",
+                "operationId": "d6c617478598a3f779b57b4f8a16afad",
+                "parameters": [
+                    {
+                        "name": "idScrumTeam",
+                        "in": "path",
+                        "description": "ScrumTeam ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    }
+                }
+            }
+        },
+        "/api/currentscrumteam/project/{idProject}": {
+            "get": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Returns the scrum Team that works currently on a project",
+                "operationId": "6a014a61fd65ed32015c7377ceffad8c",
+                "parameters": [
+                    {
+                        "name": "idProject",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "404": {
+                        "description": "no Project or available current team working on that project found!"
+                    }
+                }
+            }
+        },
+        "/api/scrumteam/project/{idProject}": {
+            "get": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Returns all the scrum Teams that worked on a project",
+                "operationId": "e605ab1351a950082aadb869e2910e41",
+                "parameters": [
+                    {
+                        "name": "idProject",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    }
+                }
+            }
+        },
+        "/api/version/getAllByProjectId/{id}": {
+            "get": {
+                "tags": [
+                    "Versions"
+                ],
+                "summary": "Returns all versions of a given project",
+                "operationId": "8592eb58950d75a6d9e1a11a51a60d73",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "204": {
+                        "description": "Project has no versions yet !"
+                    },
+                    "404": {
+                        "description": "Project not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/version/create/{id}": {
+            "post": {
+                "tags": [
+                    "Versions"
+                ],
+                "summary": "Create a new version based on an old version",
+                "operationId": "1bd74e6e9e09a8e61d91826fa0fb25be",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Old version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "number,startDate,endDate"
+                                ],
+                                "properties": {
+                                    "number": {
+                                        "type": "string",
+                                        "example": "Version number"
+                                    },
+                                    "startDate": {
+                                        "type": "timestamp",
+                                        "example": "2022-08-31 08:00:00"
+                                    },
+                                    "endDate": {
+                                        "type": "timestamp",
+                                        "example": "2022-09-05 18:31:32"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Version not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/version/update/{id}": {
+            "put": {
+                "tags": [
+                    "Versions"
+                ],
+                "summary": "Update the number of a version",
+                "operationId": "7d31e2aae7c995476ab6a975aaf4a96e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "number"
+                                ],
+                                "properties": {
+                                    "number": {
+                                        "type": "string",
+                                        "example": "0.0.0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operation successfull !"
+                    },
+                    "404": {
+                        "description": "Version not found"
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/version/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Versions"
+                ],
+                "summary": "Delete a version by ID and all it's functionnal requirements",
+                "operationId": "276d44adbee4a541a9f69623ff6825f5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Version ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Version deleted !"
+                    },
+                    "404": {
+                        "description": "Version not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/assignProjectToScrumTeam": {
+            "post": {
+                "tags": [
+                    "ScrumTeam"
+                ],
+                "summary": "Assignment of a project to a team",
+                "operationId": "48265309ee582cf5e8c06e28646f95d8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idCollaborator,idSCRUMTeam,role"
+                                ],
+                                "properties": {
+                                    "idProject": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "idScrumTeam": {
+                                        "type": "intger",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project affected to the team"
+                    },
+                    "404": {
+                        "description": "Operation Impossible"
+                    }
+                }
+            }
+        },
+        "/api/kanbanColumns/{idKanbanTable}": {
+            "get": {
+                "tags": [
+                    "Kanban Columns"
+                ],
+                "summary": "Returns All Columns By Kanban table ID",
+                "operationId": "9ca3b437a8e56610a0411fbbf1ae3bfb",
+                "parameters": [
+                    {
+                        "name": "idKanbanTable",
+                        "in": "path",
+                        "description": "Kanban table ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "404": {
+                        "description": "Project not found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            }
+        },
+        "/api/createkanbanColumn/{idKanbanTable}": {
+            "post": {
+                "tags": [
+                    "Kanban Columns"
+                ],
+                "summary": "Create a new column in a kanban table",
+                "operationId": "e001c3fa094db155aa23819db2b17856",
+                "parameters": [
+                    {
+                        "name": "idKanbanTable",
+                        "in": "path",
+                        "description": "Kanaban table ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "To Do"
+                                    },
+                                    "order": {
+                                        "type": "intger",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "kanban table not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/deletekanbanColumn/{idColumn}": {
+            "delete": {
+                "tags": [
+                    "Kanban Columns"
+                ],
+                "summary": "Delete a column from the kanban table and updates the rest of the columns orders",
+                "operationId": "b3bcf51f53e226740e51424e3e2d339c",
+                "parameters": [
+                    {
+                        "name": "idColumn",
+                        "in": "path",
+                        "description": "Column ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Column not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/updatekanbanColumnName/{idColumn}": {
+            "put": {
+                "tags": [
+                    "Kanban Columns"
+                ],
+                "summary": "Modifies the column name by ID",
+                "operationId": "be9329cf2eb92603526ddfd08361313f",
+                "parameters": [
+                    {
+                        "name": "idColumn",
+                        "in": "path",
+                        "description": "Column ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "To Do"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "column not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/labels": {
+            "get": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Returns all Labels",
+                "operationId": "89b7a3bddcdba864fcbb5c39afd8019b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation !"
+                    },
+                    "404": {
+                        "description": "No label found "
+                    },
+                    "500": {
+                        "description": "Server error "
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Add Label",
+                "operationId": "d47a194249b58f36a2f65463b40874e8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name,description,color"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "backend"
+                                    },
+                                    "description": {
+                                        "type": "text",
+                                        "example": "Label 25"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "rouge"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/api/labels/{idLabels}": {
+            "put": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Update Labels name, description and color",
+                "operationId": "27dd1e6f045d028c6db5788b439363d3",
+                "parameters": [
+                    {
+                        "name": "idLabels",
+                        "in": "path",
+                        "description": "Label ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Frontend"
+                                    },
+                                    "description": {
+                                        "type": "text",
+                                        "example": "label5"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "vert"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Label not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Labels"
+                ],
+                "summary": "Deletes a label but only if it’s not used in any functional requirement",
+                "operationId": "6018a7353adc9ce562b5689c539fc764",
+                "parameters": [
+                    {
+                        "name": "idLabels",
+                        "in": "path",
+                        "description": "Label ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Label not found"
+                    }
+                }
+            }
+        }
+    }
+}

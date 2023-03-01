@@ -1,0 +1,100 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox sent-invitations">
+                <div class="ibox-title">
+                    <h2>Sent invitations</h2>
+                    <div class="ibox-tools">
+                        <button class="btn btn-primary" (click)="inviteVisibility = false">+ Invite</button>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="m-b-lg">
+
+                        <div class="input-group input-group-sm search-btn">
+                            <input type="text" class="form-control" placeholder="Search by name...">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover issue-tracker">
+                            <tbody>
+                                <tr *ngFor="let collaborator of collaborators ;let i = index">
+                                    <td *ngIf="collaborator.status=='0'">
+                                        <span class="label label-warning">Pending</span>
+                                    </td>
+                                    <td *ngIf="collaborator.status=='1'">
+                                        <span class="label label-primary">Added</span>
+                                    </td>
+                                    <td *ngIf="collaborator.status=='-1'">
+                                        <span class="label label-danger">Deleted</span>
+                                    </td>
+                                    <td class="issue-info">
+                                        <div *ngIf="collaborator.firstName">
+                                            <div style="font-weight: 600; color: #676a6c;">
+                                                {{i+1}}-{{collaborator.firstName}} {{collaborator.lastName}}
+                                            </div>
+                                            <div style="font-weight: 100; color: #676a6c;">
+                                                {{collaborator.email}}
+                                            </div>
+                                        </div>
+                                        <div style="font-weight: 600; color: #676a6c;" *ngIf="!collaborator.firstName">
+                                            {{collaborator.email}}
+                                        </div>
+                                    </td>
+
+                                    <td class="text-right" *ngIf="collaborator.status=='0'">
+                                        <button class="btn btn-danger"
+                                            (click)="delete(collaborator.id,false)">Cancel</button>
+                                    </td>
+                                    <td class="text-right" *ngIf="collaborator.status=='1'">
+                                        <button class="btn btn-danger"
+                                            (click)="delete(collaborator.id,true)">Delete</button>
+                                    </td>
+                                    <td class=" text-right" *ngIf="collaborator.status=='-1'">
+                                        <button class="btn btn-primary"
+                                            (click)=" invite(collaborator.email)">Invite</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ibox invite" [hidden]="inviteVisibility">
+                <div class="ibox-title">
+                    <h2>Invite a collaborator</h2>
+                </div>
+                <form [formGroup]="sendInvitationForm" (ngSubmit)="invite(null)">
+
+                    <div class="ibox-content">
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Email :</label>
+
+                            <div class="col-sm-10">
+                                <input type="email" name="email" class="form-control _ge_de_ol" type="text"
+                                    placeholder="Enter Email" required="" aria-required="true" formControlName="email">
+                            </div>
+                            <div class="col-sm-10">
+
+                                <div style="color: red;"
+                                    *ngIf="  f['email']?.touched &&  f['email']?.errors?.['email']">
+                                    Email is not valid!
+                                </div>
+                            </div>
+
+                        </div>
+                        <button class="btn btn-primary float-right"
+                            [disabled]="!sendInvitationForm.valid">Invite</button>
+
+                        <button class="btn btn-white float-right" (click)="inviteVisibility = true"
+                            style="margin-right: 5px;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,193 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+         <div class="title"> 
+            <img alt="image" class="rounded-circle" src="../../../../assets/img/0.jpg" style="height:80px; display: flex;">
+            <div class="left">
+                <h2 >Scrum Team</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="">Projet</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>Scrum Team</strong>
+                    </li>
+                </ol>
+            </div>
+         </div>
+    </div>
+</div>
+
+<div class="card-text text-center" style="margin-top: 30px" [hidden]="!isLoading">
+    <div class="sk-spinner sk-spinner-three-bounce">
+      <div class="sk-bounce1"></div>
+      <div class="sk-bounce2"></div>
+      <div class="sk-bounce3"></div>
+    </div>
+</div>
+    
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12" [hidden]="!showTeamInfo">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>SCRUM Teams list</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <form class="">
+                                <div class="form-group row">
+                                    <div class="col-sm-5">
+                                        <div class="input-group"><input type="text" class="form-control" placeholder="Search"> <span class="input-group-append"> <button type="button" class="btn btn-primary">Search
+                                        </button> </span></div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name </th>
+                                        <th>Creation date </th>
+                                        <th>Project</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let team of ScrumTeams" class="clickable" (click)="showTeamInfo = false; isLoading = true; TeamClickedID = team.id; getTeamClickedInfos(team.id)">
+                                        <td><div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></td>
+                                        <td>{{ team.name }}</td>
+                                        <td>{{ team.creationDate }}</td>
+                                        <td [innerHTML]="team.working != null ? getProjectName(team.id) : 'No project is currently affected'"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" (click)="addTeamVisibility = false">+ Create Scrum Team</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;" [hidden]="addTeamVisibility">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" (click)="addTeamVisibility = true" style="padding-top: 6%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Add Scrum Team</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="details">
+                        <div class="form-group row">
+                          <label class="col-md-4 col-form-label" for="title">Name of Scrum Team :</label>
+                          <div class="col-md-8"><input type="text" class="form-control" [(ngModel)]="scrumTeamTitle"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" (click)="addTeamVisibility = true">Close</button>
+                        <button type="button" class="btn btn-primary" (click)="addTeamVisibility = true; addScrumTeam()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7"  [hidden]="showTeamInfo" *ngIf="TeamClickedInfos != undefined">
+            <div class="ibox-title">
+                <button type="button" class="btn btn-primary" (click)="showTeamInfo = true; TeamClickedInfos = undefined; TeamClickedId = undefined"><i class="fa-solid fa-arrow-left"></i> Liste of Teams</button>
+            </div>
+            <div class="ibox-content">
+                <h1>{{TeamClickedInfos.name}}</h1>
+                <p class=" alert alert-success m-b-sm" style="margin-top: 5%;">
+                    <strong>Product owner:</strong> {{TeamClickedInfos.productOwner}}<br><br>
+                    <strong>Currently affected project:</strong> <span *ngIf="TeamClickedInfos.currentlyAffectedProject == null"> No project is currently affected</span><span *ngIf="TeamClickedInfos.currentlyAffectedProject != null"> {{TeamClickedInfos.currentlyAffectedProject}}</span><br><br>
+
+                    <button _ngcontent-hef-c132="" mattooltip="Invite collaborator" class="mat-tooltip-trigger btn btn-info ng-tns-c132-0" style="margin: 10px; height: 35px; width: 50px; cursor: pointer; border-radius: 10px;"
+                     ng-reflect-message="Invite collaborator" (click)="modalVisibility = false; getAllProject()" aria-describedby="cdk-describedby-message-1" cdk-describedby-host="0">
+                     <i _ngcontent-hef-c132="" class="fa fa-plus ng-tns-c132-0"></i>
+                    </button>
+                </p>
+            </div>
+        </div>
+    
+    
+<div class="col-lg-5" [hidden]="showTeamInfo" *ngIf="TeamClickedInfos != undefined">
+    <div class="ibox ">
+        
+        <div class="ibox-content">
+            
+                
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>List of collaborators on the team</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="dd" id="nestable2" style="pointer-events: none;" style="max-height: 300px;min-height: 300px;overflow-y: auto;overflow-x: hidden">
+                        <div *ngIf="TeamClickedInfos.Collaborators.length == 0">
+                            <div class="mt-5 text-center animated fadeInRightBig">
+                                <h3 class="font-bold">No Collaborator found</h3>
+                                <div class="error-desc">
+                                    There is currently nothing to display.
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <main style="max-height: 300px;min-height: 300px;overflow-y: auto;overflow-x: auto" class="leaderboard__profiles" *ngIf="TeamClickedInfos.Collaborators.length != 0">
+                            <div style="margin-bottom: 20px">
+                                <span *ngFor="let collaborator of TeamClickedInfos.Collaborators">
+                                    <article  class="leaderboard__profile">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+                                    <div class="info">
+                                        <span class="leaderboard__name">{{collaborator.full_name}}</span><br>
+                                        <span class="leaderboard__name email">{{collaborator.email}}</span><br>
+                                        <span class="leaderboard__name dateJoined">Joined team : {{collaborator.dateJoined | date: 'dd MMMM yyyy'}}</span>
+                                        <span class="leaderboard__name scrum" matTooltip="Role">{{collaborator.role}}</span>
+                                    </div>
+                                    </article>
+                                </span>
+                            </div>
+                          </main>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: end; margin-bottom: 0;"><a routerLink="/tmp/collaborators" target="_blank" class="btn btn-primary btn-lg" role="button">Collaborators management <i class="fa-solid fa-arrow-right"></i></a>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+    
+    <div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block; z-index: 500;" [hidden]="modalVisibility">
+        <div class="modal-dialog" style="z-index: 5000;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="modalVisibility = true" style="padding-top: 2%; padding-left: 7%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h2 class="modal-title">Affect a project to a team</h2>
+                </div>
+                <div class="modal-body">
+                  <div class="panels-container">
+                      <div class="tabs-container">
+                         
+                          <div class="form-group row"><label class="col-sm-2 col-form-label">Project name :</label>
+                                                   <div class="col-sm-10">
+                                                                <select class="form-control " [(ngModel)]="selectedProject">
+                                                                  <option *ngFor="let prj of projects; let i = index" [attr.data-index]="i" value="{{prj.id}}" [selected]="i == 1">{{prj.name}}</option>
+                                                                </select>
+                                                  </div>
+                                       </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" (click)="modalVisibility = true">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="modalVisibility = true; affectProjectToTeam(TeamClickedInfos.id)">Save</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    <div class="black-bg" [hidden]="modalVisibility"></div>

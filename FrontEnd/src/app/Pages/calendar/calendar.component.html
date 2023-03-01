@@ -1,0 +1,70 @@
+<div class="form-group row  ml-3">
+  <label class="col-form-label m-t"><strong>Project</strong></label>
+  <div class="col-sm-4">
+    <select class="form-control m-t" name="account" [(ngModel)]="selectedProjectId" (change)="onChangeProject()">
+      <option *ngFor="let prj of projects" value="{{prj.id}}">{{prj.name}}</option>
+    </select>
+  </div>
+  <label class="col-form-label m-t ml-3" *ngIf="selectedProjectId !== undefined"><strong>Version</strong></label>
+  <div class="col-sm-4">
+    <select class="form-control m-t" name="account" [(ngModel)]="selectedVersionId" (change)="onChangeVersion($event.target.value)" *ngIf="selectedProjectId !== undefined">
+      <option *ngFor="let v of versions" value="{{v.id}}">{{v.number}}</option>
+    </select>
+  </div>
+  <div class="btn-group float-right" style="height: fit-content;margin-top: 1%;" [hidden]="filterVisibility">
+    <input type="radio" name="calendar-filter" id="calendar-tasks" style="display: none"><label for="calendar-tasks" class="btn btn-white filter-btn">Tasks</label>
+    <input type="radio" name="calendar-filter" id="calendar-meetings" style="display: none"><label for="calendar-meetings" class="btn btn-white filter-btn">Meetings</label>
+    <input type="radio" name="calendar-filter" id="calendar-all" style="display: none" checked><label for="calendar-all" class="btn btn-white filter-btn">All</label>
+  </div>
+</div>
+
+<!-- HEADER
+    <div class="row wrapper border-bottom white-bg page-heading">
+   <div class="col-lg-9 header-container">
+      <div class="header-titles">
+        <h2 class="header-title">Calendar</h2>
+        <span class="header-subtitle">all events</span>
+      </div>
+    </div>
+</div>-->
+  <div class="row mt-2">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-content">
+            <full-calendar [options]='calendarOptions'></full-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--MODAL : EVENT CLICK-->
+  <div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;" [hidden]="modalVisibility">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="modalVisibility = true" style="padding-top: 6%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Task details</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <img src="../../../assets/images/face.png" alt="">
+                </div>
+                <div class="details">
+                    <div class="author">
+                      Title : <strong>{{FrTitle}}</strong>
+                    </div>
+                    <div class="author">
+                        Author : <strong>{{FrAuthor}}</strong>
+                    </div>
+                    <div class="description">
+                        Description : {{FrDescription}}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" (click)="modalVisibility = true">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="black-bg" [hidden]="modalVisibility"></div>

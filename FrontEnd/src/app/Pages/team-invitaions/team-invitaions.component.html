@@ -1,0 +1,66 @@
+<div class="card-text text-center" style="margin-top: 30px" *ngIf="loading">
+  <div class="sk-spinner sk-spinner-three-bounce">
+    <div class="sk-bounce1"></div>
+    <div class="sk-bounce2"></div>
+    <div class="sk-bounce3"></div>
+  </div>
+</div>
+<div style="display: flex;justify-content: center;width: 100%" *ngIf="!loading">
+<article style="margin-right: 10px;width: 25%" class="leaderboard">
+  <header>
+    <h1 class="leaderboard__title" style="color: #35d8ac"><span class="leaderboard__title--top">Current</span><span class="leaderboard__title--bottom">Team</span></h1>
+    <br>
+  </header>
+  <main style="max-height: 400px;min-height: 400px;overflow-y: auto;overflow-x: hidden" class="leaderboard__profiles">
+    <div style="margin-bottom: 20px">
+      <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: 20px" *ngIf="currentTeam.id== null">
+        No current team
+      </div>
+      <span *ngIf="currentTeam.id != null">
+      <article class="leaderboard__profile">
+        <div class="info">
+          <span style="color:#d9534f;font-size: 20px;float: right;margin-right: -5px" [ngStyle]="{'opacity' : disableButtons ? '0.5' : '1'}" (click)="leaveTeam()" matTooltip="Leave Team"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span matTooltip="Team name" class="leaderboard__name">{{currentTeam.name}}</span><br>
+              <span class="leaderboard__name scrum" style="font-size:13px " matTooltip="Role">{{currentTeam.role}}</span><br><br>
+          <span class="leaderboard__name dateJoined">Date joined : {{currentTeam.dateJoined | date: 'dd MMMM yyyy'}}</span>
+        </div>
+      </article>
+          </span>
+    </div>
+
+  </main>
+</article>
+
+<article style="margin-right: 10px;width: 70%" class="leaderboard">
+  <header>
+    <h1 class="leaderboard__title" style="color:#f0ad4e"><span class="leaderboard__title--top">Your Pending</span><span class="leaderboard__title--bottom">Invitations</span></h1>
+    <br>
+    <div class="searchDiv">
+      <input id="searchInput" @inputSlider *ngIf="showSearch" type="text" [(ngModel)]="search" class="searchInput"/>
+      <span (click)="showSearch = true;focus()" *ngIf="!showSearch" style="cursor: pointer;color: white"><i class="fa fa-search"></i></span>
+      <span (click)="showSearch = false;search = ''" *ngIf="showSearch" matTooltip="Close search input" style="cursor: pointer;color: white"><i class="fa fa-circle-xmark"></i></span>
+    </div>
+  </header>
+  <main style="max-height: 400px;min-height: 400px;overflow-y: auto;overflow-x: hidden" class="leaderboard__profiles">
+
+    <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: 20px" *ngIf="invitaions.length == 0">
+      No pending invitaions
+    </div>
+    <span *ngIf="invitaions.length > 0">
+    <div style="margin-bottom: 20px" *ngFor="let jt of invitaions | filter : search">
+      <article class="leaderboard__profile">
+        <div class="info">
+          <div style="display: flex;float: right">
+          <span style="color:#35d8ac;font-size: 20px;margin-right: 15px" [ngStyle]="{'opacity' : disableButtons ? '0.5' : '1'}" (click)="acceptInvite(jt)" matTooltip="Accept invitaion"><i class="fa-solid fa-circle-check"></i></span>
+          <span style="color:#d9534f;font-size: 20px;margin-right: -5px" [ngStyle]="{'opacity' : disableButtons ? '0.5' : '1'}" (click)="declineInvite(jt)" matTooltip="Decline invitaion"><i class="fa-solid fa-circle-minus"></i></span>
+       </div>
+        <span class="leaderboard__name" style="font-size: 17px" matTooltip="Team name">{{jt.scrumTeam.name}}</span><br>
+          <span class="leaderboard__name scrum" style="font-size:13px " matTooltip="Role">{{jt.role}}</span><br><br>
+          <span class="leaderboard__name dateJoined" style="font-size: 13px">Invite Date : {{jt.dateJoined | date: 'dd MMMM yyyy'}}</span>
+        </div>
+      </article>
+    </div>
+</span>
+  </main>
+</article>
+</div>

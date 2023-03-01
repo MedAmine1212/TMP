@@ -1,0 +1,22 @@
+<mat-expansion-panel *ngFor="let ex of exigencs; let i = index">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <span style="margin-right: 5px"><b>{{number}}{{i+1}}.</b></span> {{ex.title}}
+    </mat-panel-title>
+    <span *ngIf="level<5" (click)="addFunctionalReq(ex)" matTooltip="Add functional requirement" style="margin-right:20px;border-radius: 20px;color:#35d8ac"><i class="fa-solid fa-circle-plus"></i></span>
+    <span matTooltip="Delete functional requirement" (click)="deleteFr(ex)" style="margin-right:20px;border-radius: 20px;color:#d9534f"><i class="fa-solid fa-trash-can"></i></span>
+    <mat-icon color="primary"  class="icon" (click)="parent.setClicked(ex)">edit</mat-icon>
+  </mat-expansion-panel-header>
+
+  <p class="text">
+    <strong> Description :</strong> {{ex.description}}<br><br>
+    <strong> Author :</strong> {{ex.author.full_name}}<br><br>
+    <strong> Responsible :</strong> <span *ngIf="ex.responsible != null">{{ex.responsible.full_name}}</span><span *ngIf="ex.responsible == null" style="color: grey;margin-left: 15px"> Not set</span><br><br>
+    <strong> Estimated time :</strong> {{parent.getStringTime(ex.estimationTime)}}
+    <span style="margin-left: 40px"><strong> Elapsed time :</strong> <span *ngIf="ex.elapsedTime > 0">{{parent.getStringTime(ex.elapsedTime)}}</span><span *ngIf="ex.elapsedTime == 0"> No elapsed time yet</span></span>
+    <span style="margin-left: 40px"><strong> Remaining time :</strong>{{parent.getStringTime(ex.estimationTime-ex.elapsedTime)}}</span>
+    <span style="margin-left: 40px"><strong> Creation date :</strong> {{ex.creationDate | date: 'dd MMMM yyyy'}}</span>
+  </p>
+  <hr>
+    <app-functions *ngIf="ex.functional_requirements.length> 0" [level]="level+1" [number] = '(i+1)+"."' [exigencs]="ex.functional_requirements"></app-functions>
+</mat-expansion-panel>

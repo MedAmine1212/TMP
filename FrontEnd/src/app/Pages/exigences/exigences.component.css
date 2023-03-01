@@ -1,0 +1,134 @@
+#ajout {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+#ajout input {
+    width: 80%;
+    border: none;
+    border-bottom: 1px solid grey;
+}
+
+#ajout button {
+    margin: 0px 5px;
+    width: 30px;
+}
+
+.ajout-vis {
+    margin-right: 10px;
+}
+
+.fa-check {
+    color: green;
+}
+
+.fa-xmark {
+    color: red;
+}
+
+#nestable {
+    display: flex;
+    flex-direction: column;
+    height: 40vh;
+}
+
+.dd-list {
+    overflow-y: auto;
+}
+
+#confirm-btn, #cancel-btn {
+    width: 30px;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+
+.span-supp{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 1px;
+    margin-right: 5px;
+}
+
+.span-supp:hover {
+    display: inline-block;
+}
+.span-new {
+  display: inline-block !important;
+  margin-top: 7px;
+  margin-left: 10px;
+}
+.dd-handle:hover ~ .span-supp{
+    display: inline-block;
+}
+
+.fa-trash-can {
+    color: red;
+}
+
+.span-modif-input {
+    position: absolute;
+    width: 98%;
+    height: 100%;
+    left: 2%;
+    top: 1px;
+    display: none;
+}
+
+.span-modif-input input {
+    width: 80%;
+    background-color: #f5f5f5;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.span-modif {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 1px;
+    margin-right: 35px;
+}
+
+.span-add {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 1px;
+  margin-right: 65px;
+}
+.span-add:hover {
+  display: inline-block;
+}
+.span-modif:hover {
+    display: inline-block;
+}
+
+.dd-handle:hover ~ .span-modif{
+    display: inline-block;
+}
+.dd-handle:hover ~ .span-add{
+  display: inline-block;
+}
+i {
+    pointer-events: none;
+}
+
+.span-modif button {
+    pointer-events: all;
+}
+
+.edit-btn {
+    margin-left: 4px;
+}
+
+.main-btns {
+    justify-self: end;
+    align-self: flex-end;
+}

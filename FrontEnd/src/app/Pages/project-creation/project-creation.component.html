@@ -1,0 +1,89 @@
+<div class="wrapper">
+    <div  class="ibox animated fadeInRight">
+        <div  class="ibox-title">
+            <h3 >Projects</h3>
+        </div>
+    <div  id="ibox-content" class="ibox-content">
+    <div  class="dataTables_filter ng-untouched ng-pristine ng-valid">
+        <input id="search-input" formcontrolname="search" type="search" class="form-control form-control-sm ng-untouched ng-pristine ng-valid" placeholder="Search">
+        <button (click)="modalVisibility = false" id="add-btn" class="float-right btn btn-w-m btn-primary" data-toggle="modal" data-target="#project-modal"><i class="fa-solid fa-plus"></i> Add project</button>
+    </div>
+    <br >
+    <table  class="table table-bordered table-hover dataTable">
+        <thead >
+            <tr >
+                <th >
+                    <span>Logo</span>
+                </th>
+                <th  class="sorting">
+                    <span>Name</span>
+                </th>
+                <th  class="sorting">
+                    <span>Type</span>
+                </th>
+                <th  class="sorting">
+                    <span>Description</span>
+                </th>
+                <th  class="sorting">
+                    <span>GitHub repo</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody >
+            <tr  class="ng-star-inserted">
+                <td  class="client-avatar" style="text-align: center; width: 70px;">
+                    <img  alt="image" class="rounded-circle avatar member-photo avatar-sm" src="../../../assets/img/0.jpg">
+                </td>
+                <td  style="padding-top: 15px;">
+                    <a style="color: #000000;">Cloud Cooker (C2)</a>
+                </td>
+                <td style="padding-top: 15px;"> 
+                    <div  class="badge ng-star-inserted" style="background-color: #17A2B8; color: white;"> Web application </div> 
+                </td>
+                <td  style="padding-top: 15px; max-width: 350px;">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                </td>
+                <td  class="center" style="padding-top: 15px;">
+                    https://github.com/motaoa2020/C2
+                </td>
+            </tr>
+           
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<!--MODAL : ADD PROJECT-->
+<div class="modal inmodal fade show" id="project-modal" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add a project</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group  row"><label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10"><input type="text" class="form-control"></div>
+                </div>
+                <label>Type</label>
+                <section class="example-section">
+                    <mat-checkbox class="example-margin" style="margin-left: 10px; display: block;">Web development</mat-checkbox>
+                    <mat-checkbox class="example-margin" style="margin-left: 10px; display: block;">Mobile development</mat-checkbox>
+                    <mat-checkbox class="example-margin" style="margin-left: 10px; display: block;">Desktop Development</mat-checkbox>
+                </section>
+                <br>
+                <div class="form-group  row"><label class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10"><textarea type="text" class="form-control"></textarea></div>
+                </div>
+                <div class="form-group  row"><label class="col-sm-2 col-form-label">GitHub repo</label>
+                    <div class="col-sm-10">https://github.com/<input style="display: inline; width: auto;" type="text" class="form-control"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal" (click)="modalVisibility = true">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="modalVisibility = true">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

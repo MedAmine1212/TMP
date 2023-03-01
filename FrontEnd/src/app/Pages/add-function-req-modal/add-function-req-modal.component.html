@@ -1,0 +1,112 @@
+
+<div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block; z-index: 500;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)="onNoClick()" class="close"style="padding-top: 2%; padding-left: 7%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Add functional requirement</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panels-container">
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+              <li><a class="nav-link active" data-toggle="tab" href="#tab-3"> <i class="fa-solid fa-clock"></i> Time management</a></li>
+              <li><a class="nav-link" data-toggle="tab" href="#tab-4"><i class="fa-solid fa-pen-to-square"></i> Details management</a></li>
+              <li><a class="nav-link" data-toggle="tab" href="#tab-5"><i class="fa-solid fa-chalkboard-user"></i> Responsible</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-3" class="tab-pane active">
+                <div class="panel-body">
+
+                  <fieldset>
+
+                    <div class="form-group row"><label class="col-sm-2 col-form-label">Original estimate</label>
+                      <div class="col-sm-10">
+                        <mat-form-field appearance="fill" style="width:10%;">
+                          <mat-label>W</mat-label>
+                          <input id="estWeek" matInput type="number" (change)="updateEstimated($event, 2400)" [(ngModel)]="estW" min="0" placeholder="0"/>
+                        </mat-form-field>
+                        Weeks
+                        <mat-form-field appearance="fill" style="width:10%;">
+                          <mat-label>D</mat-label>
+                          <input id="estDay" matInput type="number" (change)="updateEstimated($event, 480)"  [(ngModel)]="estD" min="0" placeholder="0"/>
+                        </mat-form-field>
+                        Days
+                        <mat-form-field appearance="fill" style="width:10%;">
+                          <mat-label>H</mat-label>
+                          <input id="estH" (change)="updateEstimated($event, 60)" matInput type="number"  [(ngModel)]="estH" min="0" placeholder="0"/>
+                        </mat-form-field>
+                        Hours
+                        <mat-form-field appearance="fill" style="width:10%;">
+                          <mat-label>M</mat-label>
+                          <input id="estM" matInput type="number" (change)="updateEstimated($event, 1)" [(ngModel)]="estM" min="0" placeholder="0"/>
+                        </mat-form-field>
+                        Minutes
+                      </div>
+
+                    </div>
+
+                  </fieldset>
+
+                </div>
+              </div>
+
+              <div id="tab-4" class="tab-pane">
+                <div class="panel-body">
+                  <fieldset>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Title :</label>
+                      <div class="col-sm-10"><input type="text" [(ngModel)]="funcToAdd.title" class="form-control" placeholder=""></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Description :</label>
+                      <div class="col-sm-10"><input type="text" [(ngModel)]="funcToAdd.description" class="form-control" placeholder=""></div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Parent FR:</label>
+                      <div class="col-sm-10">
+                        <input type="text" readonly *ngIf="parent != null" value="{{parent.title}}" class="form-control" placeholder="">
+                        <input type="text" readonly *ngIf="parent == null" value="No parent" class="form-control" placeholder=""></div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+
+              <div id="tab-5" class="tab-pane">
+                <div class="panel-body">
+
+                  <fieldset>
+                    <div class="form-group row"><label class="col-sm-2 col-form-label">Creator :</label>
+
+                      <div class="col-sm-10">
+                        <input readonly type="text" value="{{currentUser.fullName}}" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row"><label class="col-sm-2 col-form-label">Responsible :</label>
+                      <div class="col-sm-10">
+                        <select class="form-control" name="account">
+                          <option [selected]="funcToAdd.responsible == null">Not assigned</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </fieldset>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" [disabled]="updating" class="btn btn-white" (click)="onNoClick()">Close</button>
+        <button style="width: 70px;display: flex;justify-content: center" type="button" [disabled]="updating" class="btn btn-primary" (click)="createEx()">
+          <span *ngIf="!updating">Save</span>
+          <mat-spinner [diameter]="20" *ngIf="updating"></mat-spinner>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

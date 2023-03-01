@@ -1,0 +1,248 @@
+
+                <div class="ibox" style="min-height: 400px">
+                    <div class="ibox-title" style="padding: 4%; display:flex; justify-content: space-between;">
+                        <h5>{{ this.panelName }}</h5>
+                        <div id="nestable-menu" style="display: inline;margin: 0;">
+                            <button type="button" (click)="ajoutVisibilite(null)" class="btn btn-white btn-sm ajout-vis"><i class="fa-solid fa-plus"></i></button>
+                            <button type="button" (click)="toggleReduction()" *ngIf="!reductionController" class="btn btn-white btn-sm"><i data-action="expand-all" class="fa-solid fa-angles-down"></i></button>
+                            <button type="button" (click)="toggleReduction()" *ngIf="reductionController" class="btn btn-white btn-sm"><i data-action="collapse-all" class="fa-solid fa-angles-up"></i></button>
+                        </div>
+                    </div>
+                    <!--LOADING-->
+                    <div class="card-text text-center" style="margin-top: 30px" [hidden]="!isLoading">
+                        <div class="sk-spinner sk-spinner-three-bounce">
+                          <div class="sk-bounce1"></div>
+                          <div class="sk-bounce2"></div>
+                          <div class="sk-bounce3"></div>
+                        </div>
+                    </div>
+                    <div class="ibox-content" [hidden]="!affController || isLoading">
+                        <div class="dd" id="nestable">
+                            <ol class="dd-list"><!--Container pour les exigences-->
+                                <!--LEVEL 1-->
+                                <li class="dd-item" *ngFor="let exigenceL1 of this.exigences; let i = index" id="{{exigenceL1.id}}" [attr.data-id]="exigenceL1.id">
+
+                                  <button data-action="collapse" *ngIf="(!exigenceL1.collapsed && allCollapsed) && exigenceL1.functional_requirements.length > 0" (click)="exigenceL1.collapsed = true" type="button" style="display: inherit !important;">Collapse</button>
+                                  <button data-action="expand" (click)="exigenceL1.collapsed = false; allCollapsed = true" *ngIf="(exigenceL1.collapsed || !allCollapsed) && exigenceL1.functional_requirements.length > 0" type="button" style="display: inherit !important;">Expand</button>
+                                        <div class="dd-handle">
+                                          <b>{{i+1}}</b> {{exigenceL1.title}}
+                                        </div>
+
+                                  <div class="span-supp span-new" *ngIf="exigenceL1.id == null">
+                                    <span style="color: red">Non enregistré</span>
+                                  </div>
+                                        <div class="span-supp"  *ngIf="exigenceL1.id != null">
+                                            <button type="button" class="btn btn-white btn-sm" (click)="supprimer(exigenceL1)"><i class="fa-regular fa-trash-can"></i></button>
+                                        </div>
+                                        <div class="span-modif"  *ngIf="exigenceL1.id != null">
+                                            <button type="button" class="btn btn-white btn-sm" (click)="modifier($event, exigenceL1)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        </div>
+
+                                        <div class="span-add"  *ngIf="exigenceL1.id != null">
+                                          <button type="button" (click)="ajoutVisibilite(exigenceL1)" class="btn btn-white btn-sm"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                        <div class="span-modif-input">
+                                            <input type="text" >
+                                            <button type="button" class="btn btn-white btn-sm edit-btn" (click)="confirmerModif($event, exigenceL1)"><i class="fa-solid fa-check"></i></button>
+                                            <button type="button" class="btn btn-white btn-sm edit-btn" (click)="annulerModif($event)"><i class="fa-solid fa-xmark"></i></button>
+                                        </div>
+                                    <!--LEVEL 2-->
+                                    <ol class="dd-list" *ngIf="exigenceL1.functional_requirements.length > 0 && !exigenceL1.collapsed && reductionController">
+                                        <li *ngFor="let exigenceL2 of exigenceL1.functional_requirements; let j= index" class="dd-item" id="{{exigenceL2.id}}" [attr.data-id]="exigenceL2.id">
+                                          <button data-action="collapse" *ngIf="(!exigenceL2.collapsed  && allCollapsed) && exigenceL2.functional_requirements.length > 0" (click)="exigenceL2.collapsed = true" type="button" style="display: inherit !important;">Collapse</button>
+                                          <button data-action="expand" (click)="exigenceL2.collapsed = false; allCollapsed = true" *ngIf="(exigenceL2.collapsed || !reductionController) && exigenceL2.functional_requirements.length > 0" type="button" style="display: inherit !important;">Expand</button>
+                                          <div class="dd-handle">
+                                              <b>{{i+1}}.{{j+1}}</b> {{ exigenceL2.title }}
+                                            </div>
+
+                                          <div class="span-supp span-new" *ngIf="exigenceL2.id == null">
+                                            <span style="color: red">Non enregistré</span>
+                                          </div>
+                                            <div class="span-supp" *ngIf="exigenceL2.id != null">
+                                                <button type="button" class="btn btn-white btn-sm" (click)="supprimer(exigenceL2)"><i class="fa-regular fa-trash-can"></i></button>
+                                            </div>
+                                            <div class="span-modif" *ngIf="exigenceL2.id != null">
+                                                <button type="button" class="btn btn-white btn-sm" (click)="modifier($event, exigenceL2)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            </div>
+                                          <div class="span-add" *ngIf="exigenceL2.id != null">
+                                            <button type="button" (click)="ajoutVisibilite(exigenceL2)" class="btn btn-white btn-sm"><i class="fa-solid fa-plus"></i></button>
+                                          </div>
+                                            <div class="span-modif-input">
+                                                <input type="text">
+                                                <button type="button" class="btn btn-white btn-sm edit-btn" (click)="confirmerModif($event, exigenceL2)"><i class="fa-solid fa-check"></i></button>
+                                                <button type="button" class="btn btn-white btn-sm edit-btn" (click)="annulerModif($event)"><i class="fa-solid fa-xmark"></i></button>
+                                            </div>
+                                            <ol class="dd-list" *ngIf="exigenceL2.functional_requirements.length > 0 && !exigenceL2.collapsed && reductionController">
+                                                <li *ngFor="let exigenceL3 of exigenceL2.functional_requirements; let k= index" class="dd-item" id="{{exigenceL3.id}}" [attr.data-id]="exigenceL3.id">
+                                                  <button data-action="collapse" *ngIf="(!exigenceL3.collapsed  && allCollapsed) && exigenceL3.functional_requirements.length > 0" (click)="exigenceL3.collapsed = true" type="button" style="display: inherit !important;">Collapse</button>
+                                                  <button data-action="expand" (click)="exigenceL3.collapsed = false; allCollapsed = true" *ngIf="(exigenceL3.collapsed || !reductionController) && exigenceL3.functional_requirements.length > 0" type="button" style="display: inherit !important;">Expand</button>
+
+                                                  <div class="dd-handle">
+                                                      <b>{{i+1}}.{{j+1}}.{{k+1}}</b> {{exigenceL3.title}}
+                                                    </div>
+
+                                                  <div class="span-supp span-new" *ngIf="exigenceL3.id == null">
+                                                    <span style="color: red">Non enregistré</span>
+                                                  </div>
+                                                    <div class="span-supp" *ngIf="exigenceL3.id != null">
+                                                        <button type="button" class="btn btn-white btn-sm" (click)="supprimer(exigenceL3)"><i class="fa-regular fa-trash-can"></i></button>
+                                                    </div>
+                                                    <div class="span-modif" *ngIf="exigenceL3.id != null">
+                                                        <button type="button" class="btn btn-white btn-sm" (click)="modifier($event, exigenceL3)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                    </div>
+                                                  <div class="span-add" *ngIf="exigenceL3.id != null">
+                                                    <button type="button" (click)="ajoutVisibilite(exigenceL3)" class="btn btn-white btn-sm"><i class="fa-solid fa-plus"></i></button>
+                                                  </div>
+                                                    <div class="span-modif-input">
+                                                        <input type="text">
+                                                        <button type="button" class="btn btn-white btn-sm edit-btn" (click)="confirmerModif($event, exigenceL3)"><i class="fa-solid fa-check"></i></button>
+                                                        <button type="button" class="btn btn-white btn-sm edit-btn" (click)="annulerModif($event)"><i class="fa-solid fa-xmark"></i></button>
+                                                    </div>
+                                                    <!--LEVEL 4-->
+                                                    <ol class="dd-list" *ngIf="exigenceL3.functional_requirements.length > 0 && !exigenceL3.collapsed && reductionController">
+                                                        <li *ngFor="let exigenceL4 of this.exigenceL3.functional_requirements; let l =index" class="dd-item" id="{{exigenceL4.id}}" [attr.data-id]="exigenceL4.id">
+                                                          <button data-action="collapse" *ngIf="(!exigenceL4.collapsed  && allCollapsed) && exigenceL4.functional_requirements.length > 0" (click)="exigenceL4.collapsed = true" type="button" style="display: inherit !important;">Collapse</button>
+                                                          <button data-action="expand" (click)="exigenceL4.collapsed = false; allCollapsed = true" *ngIf="(exigenceL4.collapsed || !reductionController) && exigenceL4.functional_requirements.length > 0" type="button" style="display: inherit !important;">Expand</button>
+
+                                                          <div class="dd-handle">
+                                                            <b>{{i+1}}.{{j+1}}.{{k+1}}.{{l+1}}</b> {{exigenceL4.title }}
+                                                            </div>
+
+                                                          <div class="span-supp span-new" *ngIf="exigenceL4.id == null">
+                                                            <span style="color: red">Non enregistré</span>
+                                                          </div>
+                                                            <div class="span-supp" *ngIf="exigenceL4.id != null">
+                                                                <button type="button" class="btn btn-white btn-sm" (click)="supprimer(exigenceL4)"><i class="fa-regular fa-trash-can"></i></button>
+                                                            </div>
+                                                            <div class="span-modif" *ngIf="exigenceL4.id != null">
+                                                                <button type="button" class="btn btn-white btn-sm" (click)="modifier($event, exigenceL4)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                            </div>
+                                                          <div class="span-add" *ngIf="exigenceL4.id != null">
+                                                            <button type="button" (click)="ajoutVisibilite(exigenceL4)" class="btn btn-white btn-sm"><i class="fa-solid fa-plus"></i></button>
+                                                          </div>
+                                                            <div class="span-modif-input">
+                                                                <input type="text">
+                                                                <button type="button" class="btn btn-white btn-sm edit-btn" (click)="confirmerModif($event, exigenceL4)"><i class="fa-solid fa-check"></i></button>
+                                                                <button type="button" class="btn btn-white btn-sm edit-btn" (click)="annulerModif($event)"><i class="fa-solid fa-xmark"></i></button>
+                                                            </div>
+                                                            <!--LEVEL 5-->
+                                                            <ol class="dd-list" *ngIf="exigenceL4.functional_requirements.length > 0 && !exigenceL4.collapsed && reductionController">
+                                                                <li *ngFor="let exigenceL5 of this.exigenceL4.functional_requirements; let o = index" class="dd-item"  id="{{exigenceL5.id}}" [attr.data-id]="exigenceL5.id">
+                                                                  <button data-action="collapse" *ngIf="!exigenceL5.collapsed && exigenceL5.functional_requirements.length > 0" (click)="exigenceL5.collapsed = true" type="button" style="display: inherit !important;">Collapse</button>
+                                                                  <button data-action="expand" (click)="exigenceL5.collapsed = false" *ngIf="exigenceL5.collapsed && exigenceL5.functional_requirements.length > 0" type="button" style="display: inherit !important;">Expand</button>
+
+                                                                  <div class="dd-handle">
+                                                                      <b>{{i+1}}.{{j+1}}.{{k+1}}.{{l+1}}.{{o+1}}</b> {{exigenceL5.title }}
+                                                                    </div>
+                                                                  <div class="span-supp span-new" *ngIf="exigenceL5.id == null">
+                                                                    <span style="color: red">Non enregistré</span>
+                                                                  </div>
+                                                                    <div class="span-supp" *ngIf="exigenceL5.id != null">
+                                                                        <button type="button" class="btn btn-white btn-sm" (click)="supprimer(exigenceL5)"><i class="fa-regular fa-trash-can"></i></button>
+                                                                    </div>
+                                                                    <div class="span-modif" *ngIf="exigenceL5.id != null">
+                                                                        <button type="button" class="btn btn-white btn-sm" (click)="modifier($event, exigenceL5)"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                                    </div>
+                                                                    <div class="span-modif-input">
+                                                                        <input type="text">
+                                                                        <button type="button" class="btn btn-white btn-sm edit-btn" (click)="confirmerModif($event, exigenceL5)"><i class="fa-solid fa-check"></i></button>
+                                                                        <button type="button" class="btn btn-white btn-sm edit-btn" (click)="annulerModif($event)"><i class="fa-solid fa-xmark"></i></button>
+                                                                    </div>
+                                                                </li>
+                                                            </ol>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                            </ol>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <div id="ajout" [hidden]="Visibilite">
+
+                                        <input type="text" id="ajout-input" ngModel [(ngModel)]="title">
+
+                                    <button type="button" class="btn btn-white btn-sm" (click)="ajouter()"><i class="fa-solid fa-check"></i></button>
+                                    <button type="button" class="btn btn-white btn-sm" (click)="annuler()"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                            </ol>
+                          <div style="min-height: 30px;margin: 10px" >
+                            <div class="main-btns float-right">
+                                <button id="confirm-btn" style="display: none !important;" (click)="handleConfirm()" class="confirm-btn btn btn-w-m btn-primary">Confirmer</button>
+                                <button id="cancel-btn" style="display: none !important;" (click)="handleCancel()" class="cancel-btn btn btn-w-m btn-danger">Annuler</button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div [hidden]="true" class="m-t-md">
+                            <h5>Serialised Output (for development !)</h5>
+                        </div>
+                        <textarea [hidden]="true" id="nestable-output" [(ngModel)]="output" class="form-control"></textarea>
+                    </div>
+                    <div class="ibox-content" [hidden]="affController">
+                        <div class="dd" id="nestable2">
+                            <ol class="dd-list">
+                                <li class="dd-item" data-id="1">
+                                    <div class="dd-handle">
+                                        <span class="label label-info"><i class="fa fa-users"></i></span> Story 1
+                                    </div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="2">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 2h</span>
+                                                <span class="label label-info"><i class="fa fa-cog"></i></span> Tache 1
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="3">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 2h 30m </span>
+                                                <span class="label label-info"><i class="fa fa-bolt"></i></span> Tache 2
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="4">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 1h </span>
+                                                <span class="label label-info"><i class="fa fa-laptop"></i></span> Tache 3
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li class="dd-item" data-id="5">
+                                    <div class="dd-handle">
+                                        <span class="label label-warning"><i class="fa fa-users"></i></span> Story 2
+                                    </div>
+                                    <ol class="dd-list">
+                                        <li class="dd-item" data-id="6">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 2h </span>
+                                                <span class="label label-warning"><i class="fa fa-users"></i></span> Tache 1
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="7">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 3h </span>
+                                                <span class="label label-warning"><i class="fa fa-bomb"></i></span> Tache 2
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="8">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 4h </span>
+                                                <span class="label label-warning"><i class="fa fa-child"></i></span> Tache 3
+                                            </div>
+                                        </li>
+                                        <li class="dd-item" data-id="9">
+                                            <div class="dd-handle">
+                                                <span class="float-right"> 1h </span>
+                                                <span class="label label-warning"><i class="fa fa-child"></i></span> Tache 4
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="m-t-md">
+                            <h5>Serialised Output (for development !)</h5>
+                        </div>
+                        <textarea id="nestable2-output" class="form-control"></textarea>
+                    </div>
+                </div>
+            

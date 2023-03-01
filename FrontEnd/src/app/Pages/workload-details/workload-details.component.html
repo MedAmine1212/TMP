@@ -1,0 +1,116 @@
+<span style="cursor: pointer;font-size: 30px;color:#5bc0de" matTooltip="Back to Teams list" (click)="parent.selectedTeam = null"><i class="fa-solid fa-circle-arrow-left"></i></span>
+<br><br>
+<div @animSlider class="bigContainer">
+<span style="margin:20px;height: 60px;width: 100%">
+  <span style="font-size: 20px;color: black;font-weight: bolder;margin-bottom: 20px">
+    Scrum team: {{selectedTeam.name}}
+    <span style="float: right;width: 600px">
+       <mat-form-field style="font-size: 20px;color: black;width: 100%">
+        <mat-date-range-input style="display: none" [rangePicker]="picker">
+          <input matStartDate style="display: none" [(ngModel)]="startInput" (dateChange)="startDateChanged($event)">
+          <input matEndDate style="display: none" [(ngModel)]="endInput"  (dateChange)="endDateChanged($event)">
+        </mat-date-range-input>
+        <div *ngIf="endDate != '' && startDate != ''" style="width: 100%;display: flex;justify-content: center;color: black;opacity: 0.7;font-size: 17px">
+          Range set from <span style="margin-left: 5px;margin-right: 5px"><b>{{startDate | date: 'dd MMMM yyyy'}}</b></span> to <span style="margin-left: 5px;"><b>{{endDate | date: 'dd MMMM yyyy'}}</b></span>
+          <span (click)="clearRange()" matTooltip="Clear range" style="margin-left: 10px;cursor: pointer;color: black"><i class="fa fa-circle-xmark"></i></span>
+        </div>
+        <mat-datepicker-toggle matTooltip="Date range picker" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </span>
+  </span><br><br>
+  <span *ngIf="selectedTeam.joinTeam.length >0" class="searchDiv">
+    <input id="searchInput" @inputSlider *ngIf="showSearch" type="text" [(ngModel)]="search" class="searchInput"/>
+    <span (click)="showSearch = true;focus()" *ngIf="!showSearch" style="cursor: pointer;color: black"><i class="fa fa-search"></i></span>
+    <span (click)="showSearch = false;search = ''" *ngIf="showSearch" matTooltip="Close search input" style="cursor: pointer;color: black"><i class="fa fa-circle-xmark"></i></span>
+  </span><br>
+</span><br>
+  <div class="card-text text-center" style=";margin-top: -90px;margin-left: 70%" *ngIf="loading">
+    <div class="sk-spinner sk-spinner-three-bounce">
+      <div class="sk-bounce1"></div>
+      <div class="sk-bounce2"></div>
+      <div class="sk-bounce3"></div>
+    </div>
+  </div>
+  <div style="font-size: 17px;display: flex;width: 100%;justify-content: center;margin-top: -100px;margin-left: 35%" *ngIf="selectedTeam.joinTeam.length == 0 && !loading">
+    No collaborators on this team
+  </div>
+  <div class="grid-container" *ngIf="selectedTeam.joinTeam.length >0 && !loading">
+  <div *ngFor="let jt of displayList | filter : search" class="user-profile-area">
+    <div *ngIf="jt.status == 1" class="side-wrapper">
+      <div class="user-profile">
+        <div class="app-right">
+          <div class="personal-infos app-profile-box">
+            <img
+              src="https://assets.codepen.io/3364143/Screen+Shot+2020-08-01+at+12.24.16.png"
+              alt=""
+              class="user-photo"
+              style="width: 90px; height:90px;"
+            />
+            <div style="margin-left: 20px">
+              <p class="app-profile-box-title name">
+                <span style="margin-right: 5px"><i class="fa fa-user"></i></span>
+                {{jt.collaborator.firstName}} {{jt.collaborator.lastName}}
+              </p>
+              <p class="app-profile-box-title mail">
+                <span style="margin-right: 5px"><i class="fa fa-envelope"></i></span>
+                {{jt.collaborator.email}}
+              </p>
+              <p class="app-profile-box-title mail">
+
+                <span style="margin-right: 5px"><i class="fa fa-phone"></i></span>
+                {{jt.collaborator.phone}}
+              </p>
+            </div>
+          </div>
+
+          <div style="width: 100%;text-align: left;margin-left: 20px;margin-bottom: 10px;margin-top: -15px">
+            <span class="project-title">Date joined
+              </span><br><span >{{jt.dateJoined | date: 'dd MMMM yyyy'}}</span>
+            <div style="display: flex;justify-content: center;float: right;width: 60%;margin-top: -30px;text-align: center" class="activity-info-boxes">
+              <div class="activity-info-box time">
+                <div class="info-icon-wrapper">
+                  <span><i class="fa-regular fa-clock"></i></span>
+                </div>
+                <div class="info-text-wrapper">
+                  <span class="info-text-upper">{{getTimeString(jt.workTime)}}</span>
+                  <span class="info-text-bottom">Worktime</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div class="team-member">
+                <div [ngClass]="{'time': jt.role == 'Product owner'}" class="project-department activity-info-box">
+                  <img
+                    src="https://cdn2.iconfinder.com/data/icons/scrum-project/100/Product_Owner2-512.png"
+                    alt=""
+                    class="members"
+                  />
+                  <div>Product owner</div>
+                </div>
+                <div [ngClass]="{'time': jt.role == 'developer'}" class="project-department activity-info-box">
+                  <img
+                    src="https://cdn2.iconfinder.com/data/icons/scrum-project/100/Scrum_team-512.png"
+                    alt=""
+                    class="members"
+                  />
+                  <div >Developer</div>
+                </div>
+                <div [ngClass]="{'time': jt.role == 'SCRUM Master'}" class="project-department activity-info-box">
+                  <img
+                    src="https://cdn2.iconfinder.com/data/icons/scrum-project/100/Scrum_Master2-512.png"
+                    alt=""
+                    class="members"
+                  />
+                  <div >Scrum Master</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>

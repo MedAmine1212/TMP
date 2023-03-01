@@ -1,0 +1,15 @@
+body {
+    color: #707375;
+    background-color: #f3f3f4;
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    margin: 0;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+input:focus {
+  outline: none !important;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 9999!important; } 

@@ -1,0 +1,14 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: url('../../../assets/images/accept_bg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.stepper {
+    width: 20%;
+}

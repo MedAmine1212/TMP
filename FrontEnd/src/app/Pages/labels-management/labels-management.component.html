@@ -1,0 +1,198 @@
+<div _ngcontent-plk-c102="" class="row wrapper border-bottom white-bg page-heading">
+    <div _ngcontent-plk-c102="" class="col-lg-10">
+        <h2 _ngcontent-plk-c102="">Labels</h2
+            ><ol _ngcontent-plk-c102="" class="breadcrumb">
+                <li _ngcontent-plk-c102="" class="breadcrumb-item"><a _ngcontent-plk-c102="" href="">SRS</a></li>
+                <li _ngcontent-plk-c102="" class="breadcrumb-item"><a _ngcontent-plk-c102="">Labels</a></li>
+                <li _ngcontent-plk-c102="" class="breadcrumb-item active"><strong _ngcontent-plk-c102="">Labels management</strong></li>
+            </ol>
+        </div>
+            <div _ngcontent-plk-c102="" class="col-sm-2">
+    <div _ngcontent-plk-c102="" class="title-action">
+        <a _ngcontent-plk-c102=""  class="btn btn-primary" (click)="modalVisibility = false"  style="color:white ;">+ Label</a>
+    </div>
+    </div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-content">
+
+                <table class="footable table table-stripped toggle-arrow-tiny footable-loaded tablet breakpoint" data-page-size="15">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">Label Name<span class="footable-sort-indicator"></span></th>
+                            <th data-hide="phone" class="footable-visible footable-sortable">Color<span class="footable-sort-indicator" ></span></th>
+                            <th data-toggle="true" class="footable-visible footable-sortable footable-first-column">Description<span class="footable-sort-indicator"></span></th>
+                            <th class="footable-visible footable-last-column" data-sort-ignore="true">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                 
+                    <tr *ngFor="let item of row" class="footable-detail-show footable-even" >
+
+                        
+                        <td class="footable-visible footable-first-column">
+                            <span [innerHTML]="item.name"></span>
+                        </td>
+                       
+                        <td class="footable-visible">
+                            <div
+                                       class="color-box"
+                                        [style.background]="item.color"
+                                        (click)="selectedColor = 'item.color'"
+                            >
+                            </div>
+                       
+                        </td>
+                            <td class="footable-row-detail" style="width: 60%;">
+                                
+                                <div class="footable-row-detail-inner">
+                                    <div class="footable-row-detail-row">
+                                        
+                                                <div class="footable-row-detail-value">
+                                                    {{item.description}}
+                                                </div>
+                                    </div>
+                                </div>
+
+                            </td>
+
+                            <td class="footable-visible footable-last-column">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline btn-primary dim" type="button" (click)="modalVisibility1 = false; labelToUpdate = item; colorSelected = labelToUpdate.color"><i class="fa-solid fa-pen-to-square" color="primary"></i></button>
+                                    <button class="btn btn-outline btn-danger  dim " type="button" (click)="deleteRow(item.id)" ><i class="fa-solid fa-trash" color="primary"></i></button>
+                                </div>
+                            </td>
+    
+                       
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- modal changes  -->
+
+<div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block; z-index: 500;" [hidden]="modalVisibility1" *ngIf="labelToUpdate != undefined">
+    <div class="modal-dialog" style="z-index: 5000;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="modalVisibility1 = true" style="padding-top: 2%; padding-left: 7%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h2 class="modal-title">Edit label</h2>
+            </div>
+            <div class="modal-body">
+              <div class="panels-container">
+                  <div class="tabs-container">
+                     
+                    <div class="form-group row"><label class="col-sm-2 col-form-label">Label name:</label>
+                                            <div class="col-sm-10">
+                                                <input  placeholder="Edit name" class="form-control" [(ngModel)]="labelToUpdate.name">
+                                            </div>
+                    </div>
+
+                      <div class="form-group row"><label class="col-sm-2 col-form-label">Color:</label>
+                        <div class="col-sm-10">
+                            <input type="button" class="btn btn-w-m btn-default"
+                            
+                            [style.background]="selectedColor"
+                            [(colorPicker)]="selectedColor"
+                            [cpOKButton] = "true"
+                            [cpOKButtonText] = "'Select'"
+                            [cpCancelButton] = "true"
+                            [cpSaveClickOutside] = "'false'"
+                            [cpDisableInput]="false"
+                            [cpAlphaChannel]="'disabled'" 
+                            [cpOutputFormat]="'hex'"
+                            [cpPresetColors]="presetValues"
+                            [cpAddColorButton]="true" 
+                            (colorPickerSelect)="true"
+                            (colorPickerChange)="updateColor($event)"
+                            [(ngModel)]="selectedColor"
+                            />
+                        </div>
+                    </div>
+
+                     <div class="form-group row"><label class="col-sm-2 col-form-label">Description:</label>
+                                <div class="col-sm-10">
+                                     <input  placeholder="Edit description" class="form-control" [(ngModel)]="labelToUpdate.description">
+                                </div>
+                     </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" (click)="modalVisibility1 = true">Close</button>
+                <button type="button" class="btn btn-primary" (click)="modalVisibility1 = true; updateLabel()" >Edit label</button>
+            </div>
+        </div>
+    </div>
+  </div>
+<div class="black-bg" [hidden]="modalVisibility1"></div>
+
+
+
+<!-- modal form -->
+
+<div class="modal inmodal fade show" id="event-modal" tabindex="-1" role="dialog" aria-modal="true" style="display: block; z-index: 500;" [hidden]="modalVisibility">
+    <div class="modal-dialog" style="z-index: 5000;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="modalVisibility = true" style="padding-top: 2%; padding-left: 7%;"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h2 class="modal-title">Add label</h2>
+            </div>
+            <div class="modal-body">
+              <div class="panels-container">
+                  <div class="tabs-container">
+                     
+                      <div class="form-group row"><label class="col-sm-2 col-form-label">Label name:</label>
+                                            <div class="col-sm-10">
+                                                <input  placeholder="Add name" class="form-control" [(ngModel)]="labelName">
+                                            </div>
+                      </div>
+
+                      <div class="form-group row"><label class="col-sm-2 col-form-label">Color:</label>
+                        <div class="col-sm-10">
+                            <input type="button" class="btn btn-w-m btn-default"
+                            
+                            [style.background]="selectedColor" 
+                            [(colorPicker)]="selectedColor"
+                            [cpOKButton] = "true"
+                            [cpOKButtonText] = "'Select'"
+                            [cpCancelButton] = "true"
+                            [cpSaveClickOutside] = "'false'"
+                            [cpDisableInput]="false"
+                            [cpAlphaChannel]="'disabled'" 
+                            [cpOutputFormat]="'hex'"
+                            [cpPresetColors]="presetValues"
+                            [cpAddColorButton]="true" 
+                            (colorPickerSelect)="true"
+                            [(ngModel)]="selectedColor"
+                            />
+                            </div>
+                        </div>
+
+                     <div class="form-group row"><label class="col-sm-2 col-form-label">Description:</label>
+                                <div class="col-sm-10">
+                                     <input  placeholder="Lorem Ipsum is simply" class="form-control" [(ngModel)]="labelDesc">
+                                </div>
+                     </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" (click)="modalVisibility = true">Close</button>
+                <button type="button" class="btn btn-primary" (click)="modalVisibility = true" (click)=" addTable()">Add label</button>
+            </div>
+        </div>
+    </div>
+  </div>
+<div class="black-bg" [hidden]="modalVisibility"></div>

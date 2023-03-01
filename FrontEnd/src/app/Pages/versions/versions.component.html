@@ -1,0 +1,241 @@
+<div class="app-container">
+  <div class="app-content">
+    <div class="projects-section">
+      <div class="projects-section-header">
+        <p>Versions</p>
+        <p class="time">{{ todayDate }}</p>
+      </div>
+      <div class="projects-section-line">
+        <div class="projects-status">
+          <div class="item-status">
+            <span class="status-number">{{ projects.length }}</span>
+            <span class="status-type">Total projects</span>
+          </div>
+          <div class="item-status">
+            <span class="status-number">24</span>
+            <span class="status-type">Upcoming</span>
+          </div>
+          <div class="item-status">
+            <span class="status-number">62</span>
+            <span class="status-type">Other value</span>
+          </div>
+        </div>
+        <div class="view-actions" [hidden]="hideSelection" >
+          <select #mySelect [(ngModel)]="selectedProject"  (change)="onChoiceClick($event)" [hidden]="hideSelection" class="form-control m-b" name="account">
+            <option  value="" disabled selected hidden>Please Choose a Project..</option>
+            <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+        </select>
+
+          <button
+            class="view-btn list-view"
+            title="List View"
+            (click)="listEvent()"
+            [ngClass]="listViewStatus ? 'active' : ''"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-list"
+            >
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" />
+            </svg>
+          </button>
+          <button
+            class="view-btn grid-view"
+            title="Grid View"
+            (click)="gridEvent()"
+            [ngClass]="gridViewStatus ? 'active' : ''"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-grid"
+            >
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        class="project-boxes"
+        [ngClass]="[
+          listViewStatus ? 'jsListView' : '',
+          gridViewStatus ? 'jsGridView' : ''
+        ]"
+      >
+        <div class="project-box-wrapper" [hidden]="hideVersions" *ngFor="let version of versions2" >
+          <div class="project-box" style="background-color:#dbf6fd ;"  (click)="getFunctionalneeds(version.id)">
+            <div class="project-box-header">
+              <p>{{ version.creactionDate }}</p>
+              <div class="more-wrapper btn-group">
+                <button
+                  data-toggle="dropdown"
+                  class="project-btn-more"
+                  aria-expanded="false"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-more-vertical"
+                  >
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="5" r="1" />
+                    <circle cx="12" cy="19" r="1" />
+                  </svg>
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  x-placement="bottom-start"
+                  style="
+                    position: absolute;
+                    top: 33px;
+                    left: 0px;
+                    will-change: top, left;
+                  "
+                >
+                  <li><a class="dropdown-item" (click)="modifVersion(version.id,version.number)" >Edit</a></li>
+                  <li><a class="dropdown-item" (click)="deleteVersion(version.id)">Delete</a></li>
+                  <li>
+                    <a class="dropdown-item" (click)="getFunctionalneeds()">Show requirements</a>
+                  </li>
+                  <li class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Add Version</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="project-box-content-header">
+              <p class="box-content-header">Version {{ version.number }}</p>
+              <p class="box-content-subheader">{{ version.frcount }} functional requirements</p>
+            </div>
+            <div class="project-box-footer">
+              <div class="participants">
+                <img
+                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
+                  alt="participant"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
+                  alt="participant"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project Selection" style="display: inline ;" >
+          <select  [(ngModel)]="selectedProject"  (change)="onChoiceClick($event)" style="margin-top: 40px ; margin-left: 40px ; margin-bottom: 30px ;  display: inline;" [hidden]="!hideSelection" class="form-control m-b" >
+            <option  [ngValue]="" selected disabled hidden>Please Choose a Project..</option>
+            <option *ngFor="let project of projects" [value]="project.id">{{ project.name }}</option>
+
+        </select>
+        <!-- <button [hidden]="!hideSelection" style=" margin-left: 40px ; margin-bottom: 40px ; display: inline; "data-toggle="button" class="btn btn-primary"  type="button" aria-pressed="false">Validate Choice</button> -->
+        </div>
+
+      </div>
+    </div>
+    <div class="messages-section" [hidden]="hideSelection" >
+      <button class="messages-close">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-x-circle"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
+      </button>
+      <div class="projects-section-header">
+        <p>Version Info</p>
+        <button data-toggle="button" class="btn btn-primary active" style="background: #000; color:#fff" type="button" aria-pressed="false" (click)="addVersion()">Add Version</button>
+      </div>
+      <div class="messages">
+        <div class="message-box" [hidden]="showFunctionalneeds">
+          <div class="message-content">
+            <div class="message-header">
+              <div class="name">Functional requirements</div>
+              <a routerLink="../functionallist/{{selectedVersion2}}" style="font-size: 20px;margin: 10px;cursor: pointer" matTooltip="Open functional requirements page"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+            <app-exigences *ngIf="selectedVersion2!==undefined" [version]="selectedVersion2"></app-exigences>
+          </div>
+        </div>
+        <div class="message-box" [hidden]="addVisibility" >
+          <div class="message-content">
+            <div class="message-header">
+              <div class="name" *ngIf="modifVisibility">Add version</div>
+              <div class="name" *ngIf="!modifVisibility">Modify version</div>
+            </div>
+            <div class="ibox add-box" >
+              <div class="ibox-title">
+                <p *ngIf="modifVisibility">Add version</p>
+                <p *ngIf="!modifVisibility"> Modify Version </p>
+              </div>
+              <div class="ibox-content">
+                <form [formGroup]="versionForm">
+                <div class="add-form">
+                    <div *ngIf="modifVisibility" class="input-1">
+                        <label>Base Version</label>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Version</mat-label>
+                            <mat-select #selectedVersion (selectionChange)="onVersionChange($event)">
+                            <mat-option *ngFor="let version of versions2" [value]="version.id">
+                                Version {{version.number}}
+                            </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="input-2">
+                        <label>Numéro de version</label>
+                        <mat-form-field appearance="fill">
+                            <input formControlName="number" matInput placeholder="Exp. 2.0.1" value="">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="add-buttons">
+                    <button type="submit" class="btn btn-w-m btn-success" style="margin-right: 10px;" (click)="modifVisibility?confirmAdd():confirmModif()">Confirmer</button>
+                    <button type="button" class="btn btn-w-m btn-danger" (click)="toggleAddVisibility(true)">Annuler</button>
+                </div>
+              </form>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

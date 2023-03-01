@@ -1,0 +1,93 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+      <h2>Documents</h2>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="">SRS</a>
+          </li>
+          <li class="breadcrumb-item">
+              <a>Documents</a>
+          </li>
+          <li class="breadcrumb-item active">
+              <strong>List documents</strong>
+          </li>
+      </ol>
+  </div>
+  <div class="col-sm-2">
+    <div class="title-action">
+        <a routerLink="/tmp/AddDocuments" class="btn btn-primary">+ Documents</a>
+    </div>
+</div>
+</div>
+
+
+<div *ngIf="documents == undefined || documents.length == 0" class="wrapper wrapper-content">
+  <div class="middle-box text-center animated fadeInRightBig">
+      <h3 class="font-bold">la liste des documents est vide</h3>
+      <div class="error-desc">
+        Il n’y a actuellement rien à afficher .
+          <br>
+      </div>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+  <div *ngIf="documents && documents.length >0"  class="col-md-12">
+
+    <div class="ibox">
+        <div class="ibox-title">
+            <span class="float-right">(<strong>{{ documents.length }}</strong>) Documents</span>
+            <h5>la liste des documents de projet</h5>
+        </div>
+        <div class="ibox-content">
+
+
+            <div class="table-responsive">
+                <table class="table shoping-cart-table">
+
+                    <tbody>
+                    <tr *ngFor="let d of documents">
+                        <td width="100">
+                            <div class="cart-product-imitation">
+                              {{d.category.slice(0,3)}}
+                            </div>
+                        </td>
+                        <td class="desc">
+                            <h3>
+                            <a routerLink="/tmp/DetailDocuments/{{d.id}}" class="text-navy">
+                              {{d.title}}
+                            </a>
+                            </h3>
+                            <p class="small">
+                              <i class="fa fa-clock" aria-hidden="true"></i>  {{d.creationDate}}
+                            </p>
+
+
+                            <div class="m-t-sm">
+                                <a routerLink="/tmp/DetailDocuments/{{d.id}}" class="text-muted"><i class="fa fa-eye"></i> Voir detail</a>
+                                |
+                                <a class="text-muted" (click)="deleteDoc(d.id)"><i class="fa fa-trash"></i> Supprimer </a>
+                            </div>
+                        </td>
+
+
+                        <td width="65">
+
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+</div>

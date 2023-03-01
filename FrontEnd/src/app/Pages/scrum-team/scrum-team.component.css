@@ -1,0 +1,185 @@
+
+.title{
+    display: flex;
+    margin-top: 2%;
+}
+
+.title1{
+   display: flex;
+}
+/* .breadcrumb{margin-left: 15%;
+} */
+.left{
+    margin-left: 3%;
+}
+
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+
+  mat-expansion-panel.parentPanel {
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .parentPanel_header {
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  }
+  .childPanelCount{
+    opacity: 50%;
+  }
+  
+  .parentPanel mat-expansion-panel.childPanel {
+    margin-top: 1em !important;
+  }
+  
+  ::ng-deep .childPanel div.mat-expansion-panel-body {
+    padding-bottom: 0 !important;}
+
+  
+  
+  .modal-dialog {
+      width: 120%;
+  }
+  
+  .modal-body {
+      display: flex;
+      align-items: center;
+  }
+  
+  .modal-header {
+      padding-top: 3% !important;
+      padding-bottom: 3% !important;
+  }
+  .black-bg {
+    height: 100%;
+    width: 9999px;
+    background-color: #000000;
+    position: absolute;
+    top: 0;
+    left: -1000px;
+    z-index: 10;
+    opacity: 0.5;
+   bottom: 0;
+}
+.modal-dialog{
+  max-width: 500px !important;
+  width: 550px !important;
+
+}
+
+.modal-content{
+  height: fit-content;
+}
+.text{
+  margin-left: 3%;
+}
+.icon{
+  margin-right: 2%;
+}
+
+.panels-container {
+  max-width: 150%;
+  width: 100%;
+}
+.note-editable.card-block{
+  margin-left: 12%;
+}
+
+.modal-title{
+ 
+  color: #1ab394;
+  font-size: 12px;
+
+}
+
+.float-left label {
+  margin-top: 5%;
+}
+.modal-dialog{
+    margin-top: 13%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.leaderboard__profile {
+  grid-template-columns: 1fr 3fr 1fr;
+  display: flex;
+  align-items: center;
+  width: 95%;
+  min-height: 120px;
+  max-height: 600px;
+  margin: 10px;
+  padding: 10px 30px 10px 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98), box-shadow 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+  background-color: #fff;
+}
+
+.leaderboard__picture {
+  max-width: 100%;
+  width: 60px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px #ebeef3, 0 0 0 11px #f3f4f6;
+}
+.leaderboard__name {
+  color: black;
+  word-break: break-word;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.64px;
+  margin-left: 12px;
+}
+.dateJoined{
+  word-break: break-word;
+  font-size: 12px;
+}
+.info {
+  word-break: break-word;
+  margin-left: 15px;
+  width: 100%;
+  margin-top: 20px;
+}
+.email{
+  word-break: break-word;
+  color: #979cb0;
+  font-size: 13px;
+}
+.scrum{
+  cursor: pointer;
+  font-size: 12px;
+  float: right;
+  word-break: break-word;
+  color: #35d8ac;
+}
+.scrum:hover{
+  transform: scale(1.1);
+}
